@@ -1,9 +1,9 @@
-/*globals load, include*/
+/*globals load, include, globals, keys, Pages, Application, SMF, _*/
 //alert('hello');
 function displayByLimit(controls, limit){
 	limit = limit || 10;
 	if(!(controls instanceof Array)){
-		controls = _.keys(controls);
+		controls = Object.keys(controls);
 	}
 	var stack = [];
 	for(var i = 0; i < controls.length; i++){
@@ -26,7 +26,7 @@ function displayTypeAndNameOfControls(controls, start){
 function removeChildren(parent, start, stop){
 	var end = stop || parent.controls.length;
 	var begin = start || 0;
-	for(i = end; i > begin - 1; i--){
+	for(var i = end; i > begin - 1; i--){
 		parent.remove(parent.controls[i]);
 	}
 }
@@ -84,7 +84,7 @@ globals = {
 			genymotion: '10.0.3.2'
 		},
 		c9:{
-			fastDebug: 'smartfacefastdebug-serkanserttop-smf.c9.io'
+			smf_experiments: 'smf-experiments-serkanserttop-smf-2.c9.io'
 		}
 	},
 	environment: {
@@ -94,10 +94,9 @@ globals = {
 };
 //}
 //globals.HOST_URL = 'http://' + globals.my_hosts.device.work;
-globals.HOST_URL = 'http://' + globals.my_hosts.local.emulator;
-globals.APP_URL = globals.HOST_URL + '/smartface/';
-//globals.HOST_URL = 'http://' + globals.my_hosts.c9.fastDebug;
-
+//globals.HOST_URL = 'http://' + globals.my_hosts.local.emulator;
+globals.HOST_URL = 'http://' + globals.my_hosts.c9.smf_experiments;
+globals.APP_URL = globals.HOST_URL + '/';
 //Pages.Page1.ScrollView.clear();
 /*
 (function (){

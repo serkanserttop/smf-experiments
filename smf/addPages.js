@@ -1,19 +1,6 @@
 
+
 (function(){
-	
-	var pagesUrl = globals.APP_URL + 'scripts/pages/', pageUrls = [
-		['Main', globals.APP_URL + 'main.js'],
-		['Pages', globals.APP_URL + 'addPages.js'],
-		['Add Underscore', globals.APP_URL + 'scripts/third-party/underscore-min.js'],
-		['Add Backbone', globals.APP_URL + 'scripts/third-party/backbone-min.js'],
-		['Sliders', pagesUrl + 'slider.js'],
-		['Image Buttons', pagesUrl + 'imagebuttons.js'],
-		['Text Buttons', pagesUrl + 'textbuttons.js']
-	];
-
-	//Pages.Page1.ScrollView.clear();
-	removeChildren(Pages.Page1.ScrollView, 2);
-
 	function createPageUrlLoadTextButton(parent, name, url){
 		var txtBtn = new SMF.UI.TextButton({
 			text: name,
@@ -24,28 +11,22 @@
 		});
 		parent.add(txtBtn);
 	}
+	var pages_url = globals.APP_URL + 'pages/', libs_url = globals.APP_URL + 'libs/', pageUrls = [
+		['Main', globals.APP_URL + 'main.js'],
+		['Pages', globals.APP_URL + 'addPages.js'],
+		['Add Underscore', libs_url + 'third-party/underscore-min.js'],
+		//['Add Backbone', libs_url + 'third-party/backbone-min.js'],
+		['Sliders', pages_url + 'slider.js'],
+		['Image Buttons', pages_url + 'imagebuttons.js'],
+		['Text Buttons', pages_url + 'textbuttons.js'],
+		['Exit', globals.APP_URL + 'exit.js'],
+		['Es6 Test', globals.APP_URL + 'experiment/es6/es6.js']
+	];
+
+	removeChildren(Pages.Page1.ScrollView, 2);
 
 	for(var i = 0; i < pageUrls.length; i++){
 		var row = pageUrls[i];
 		createPageUrlLoadTextButton(Pages.Page1.ScrollView, row[0], row[1]);
 	}	
 })();
-
-
-/*
-(function(){
-	var len = Pages.Page1.ScrollView.controls.length;
-	alert(len);
-	for(var i = 2; i < len; i++){
-		Pages.Page1.ScrollView.remove(Pages.Page1.ScrollView.controls[i]);
-	}
-	alert(Pages.Page1.ScrollView.controls.length);
-})();
-*/
-
-
-(function(){
-	//displayTypeAndNameOfControls(Pages.Page1.ScrollView.controls, 2);
-})();
-
-//displayByLimit(Pages.Page1.ScrollView);
