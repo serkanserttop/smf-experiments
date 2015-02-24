@@ -4,7 +4,7 @@
   var toggleImages;
   var HOME_URL = globals.APP_URL;
   var page = Pages.Slider = new SMF.UI.Page({
-      onKeyPress: keys.page.onKeyPress
+    onKeyPress: keys.page.onKeyPress
   });
   Pages.Slider.clear();
   
@@ -84,10 +84,14 @@
     page.add(btn);
   }
   
-  toggleImages = (function (){
+  toggleImages = (function toggleImages(){
     var states = ['default', 'highlighted', 'inactive'], idx_state = 0;
     return function(){
       var state = states[idx_state];
+      if(idx_state === states.length - 1){
+        idx_state = 0;
+      }
+      //set image according to the state, but how?
     }
   })();
   //page.ImageButton1.alpha = 0.5;

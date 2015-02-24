@@ -1,5 +1,5 @@
 /*globals load, include, globals, keys, Pages, Application, SMF, _*/
-//alert('hello');
+
 function displayByLimit(controls, limit){
 	limit = limit || 10;
 	if(!(controls instanceof Array)){
@@ -29,6 +29,44 @@ function removeChildren(parent, start, stop){
 	for(var i = end; i > begin - 1; i--){
 		parent.remove(parent.controls[i]);
 	}
+}
+function createPageUrlLoadTextButton(parent, name, url){
+	var txtBtn = new SMF.UI.TextButton({
+		text: name,
+		onPressed: function(){
+			include(url);
+		}
+	});
+	parent.add(txtBtn);
+}
+function createPageLinks(pageName, links, targetName){
+	if(!Pages[pageName]){
+		Pages[pageName] = new SMF.UI.Page({});
+	}
+	var page = Pages[pageName];
+	if(!targetName){
+		targetName = 'ScrollView';
+	}
+	if(page[targetName]){
+		page.remove(page[targetName]);
+	}
+	var target = page[targetName] = new SMF.UI.ScrollView({
+    top: "10%",
+    left: "10%",
+    width: "80%",
+    height: "80%",
+    contentHeight: "100%",
+    contentWidth: "100%"
+	});
+	page.add(target);
+
+	for(var i = 0; i < links.length; i++){
+		var row = links[i];
+		createPageUrlLoadTextButton(target, row[0], row[1]);
+	}
+	target.layoutType = SMF.UI.LayoutType.linear;
+	target.orientation = SMF.UI.Orientation.vertical;
+	target.autosize = true;
 }
 
 keys = {
@@ -71,8 +109,6 @@ keys = {
 	}
 };
 
-
-//if(typeof globals === 'undefined'){
 globals = {
 	my_hosts:{
 		local: {
@@ -80,10 +116,14 @@ globals = {
 				home: '192.168.0.12',
 				work: '192.168.3.84'
 			},
-			emulator: '10.0.2.2',
-			genymotion: '10.0.3.2'
+			emulator: {
+				android: '10.0.2.2',
+				genymotion: '10.0.3.2',
+				ios: 'find out'
+			}
 		},
 		c9:{
+			current: 'smf-experiments-serkanserttop-smf-2.c9.io',
 			smf_experiments: 'smf-experiments-serkanserttop-smf-2.c9.io'
 		}
 	},
@@ -92,83 +132,60 @@ globals = {
 		state : 'dev' //production, test
 	}
 };
-//}
-//globals.HOST_URL = 'http://' + globals.my_hosts.device.work;
-//globals.HOST_URL = 'http://' + globals.my_hosts.local.emulator;
-globals.HOST_URL = 'http://' + globals.my_hosts.c9.smf_experiments;
-globals.APP_URL = globals.HOST_URL + '/';
-//Pages.Page1.ScrollView.clear();
-/*
-(function (){
-	Pages.Sliders.clear();
-	//add Pages.Slider
-	var page = Pages.Sliders = new SMF.UI.Page({
-		name: 'Sliders',
-		onKeyPress: keys.page.onKeyPress,
-		onKeyPressed: keys.page.onKeyPress
-	});
 
-	var txtBtn = new SMF.UI.TextButton({
-		text: 'Sliders',
-		onPressed: function(){
-			page.show();
-		}
-	});
-	Pages.Page1.ScrollView.add(txtBtn);
-
-	var container = new SMF.UI.Container({
-		top: '10%',
-		left: '10%',
-		width: '80%',
-		height: '80%',
-		contentHeight: '100%',
-		contentWidth: '100%'
-	});
-	Pages.Sliders.add(container);
-
-	var slider = new SMF.UI.Slider({
-    top: "10%",
-    left: "10%",
-    valueRangeMin: 0,
-    valueRangeMax: 100,
-    value: 50, //gives initial value
-    stepSize: 5,
-    showThumbnail: false
-	});
-	container.add(slider);
-
-})();
-*/
-
-//include(globals.APP_URL + '/addPages.js');
-//alert('hello local development');
-/*
-if(typeof _ === 'undefined' || typeof Backbone === 'undefined'){
-	if(globals.environment.location === 'local'){
-		load(globals.APP_URL + 'scripts/third-party/underscore-min.js');
-		load(globals.APP_URL + 'scripts/third-party/backbone-min.js');
+globals.environment.setServer = function(target, port){
+	var server = '';
+	if(!port){ port = ''; }
+	else if(typeof port === 'number'){
+		port = ':' + port;
 	}
-	else if(globals.environment.location === 'cdn'){
-		load('http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore.js');
-		load('http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js');
-	}	
-}
-*/
-//alert(Pages.Page1.name);
-//alert( ( Pages.Page1.controls instanceof Array ) );
-//alert(Pages.Page1.controls.length);
+	switch(target){
+		case "home":
+			server = globals.my_hosts.local.device.home;
+			break;
+		case "work":
+			server = globals.my_hosts.local.device.work;
+			break;
+		case "android":
+			server = globals.my_hosts.local.emulator.android;
+			break;
+		case "genymotion":
+			server = globals.my_hosts.local.emulator.genymotion;
+			break;
+		case "home":
+			server = globals.my_hosts.local.emulator.ios;
+			break;
+		case "c9.smf_experiments":
+			server = globals.my_hosts.c9.smf_experiments;
+			break;
+		case "c9.current":
+			server = globals.my_hosts.c9.current;
+			break;
+		default:
+			server = target;
+	}
+	globals.HOST_URL = 'http://' + server + port;
+	globals.APP_URL = globals.HOST_URL + '/';
+};
 
-//Pages.
-//Pages.Page1.add()
-//var controls = _.keys(Pages.Page1.controls[0]);
-//Pages.Page1.ScrollView.Editbox.fillColor = 'red';
+globals.environment.setServer('c9.smf_experiments');
 
-//displayByLimit(Pages.Page1);
-//displayByLimit(Pages.Page1.controls[0]);
-//displayByLimit(Pages.Page1.ScrollView.controls[0])
-/*
+(function(){
+	var pages_url = globals.APP_URL + 'pages/', libs_url = globals.APP_URL + 'libs/', links = [
+		['Refresh main.js', globals.APP_URL + 'main.js'],
+		['Go To Links', pages_url + 'index.js']
+	];
+	if(typeof _ === 'undefined'){
+		links.push(['Add Underscore', libs_url + 'third-party/underscore-min.js']);
+	}
+	if(typeof Backbone === 'undefined'){
+		links.push(['Add Backbone', libs_url + 'third-party/backbone-min.js']);
+	}
+	createPageLinks('Page1', links)
+	/*removeChildren(Pages.Page1.ScrollView, 2);
 
-*/
-/*_.each(controls, function(str){
-	alert(str);
-});*/
+	for(var i = 0; i < links.length; i++){
+		var row = links[i];
+		createPageUrlLoadTextButton(Pages.Page1.ScrollView, row[0], row[1]);
+	}*/
+})();
