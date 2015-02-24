@@ -1,41 +1,49 @@
-/*
-(function (){
-	Pages.Sliders.clear();
-	//add Pages.Slider
-	var page = Pages.Sliders = new SMF.UI.Page({
-		name: 'Sliders',
-		onKeyPress: keys.page.onKeyPress,
-		onKeyPressed: keys.page.onKeyPress
+/*globals SMF, Pages, keys*/
+(function(){
+    var pageName = 'UIElementsSliderDrawerEx01';
+	var page = Pages[pageName] = new SMF.UI.Page({
+		onKeyPress: keys.page.onKeyPress
 	});
+	page.clear();
+    var slider_drawer = new SMF.UI.SliderDrawer({
+        width : '30%',
+        touchEnabled : 'true',
+        backgroundColor : 'green',
+        position : 'left'
+    });
+    page.add(slider_drawer);
 
-	var txtBtn = new SMF.UI.TextButton({
-		text: 'Sliders',
-		onPressed: function(){
-			page.show();
-		}
-	});
-	Pages.Page1.ScrollView.add(txtBtn);
-
-	var container = new SMF.UI.Container({
-		top: '10%',
-		left: '10%',
-		width: '80%',
-		height: '80%',
-		contentHeight: '100%',
-		contentWidth: '100%'
-	});
-	Pages.Sliders.add(container);
-
-	var slider = new SMF.UI.Slider({
-    top: "10%",
-    left: "10%",
-    valueRangeMin: 0,
-    valueRangeMax: 100,
-    value: 50, //gives initial value
-    stepSize: 5,
-    showThumbnail: false
-	});
-	container.add(slider);
-
+    /*var sliderTxtBtn = new SMF.UI.TextButton({
+        top: "10%",
+        left: "10%",
+        text: "Button",
+        onPressed: function(){
+        	alert('Hello from Text Button inside of Slider Drawer');
+        }
+    });
+    slider_drawer.add(sliderTxtBtn);*/
+    
+    var pageTxtBtnShow = new SMF.UI.TextButton({
+        top: "10%",
+        left: "30%",
+        width: "50%",
+        text: "Show Slider Drawer",
+        onPressed: function(){
+        	slider_drawer.show();
+        }
+    });
+    
+    var sliderTxtBtnHide = new SMF.UI.TextButton({
+        top: "30%",
+        left: "10%",
+        //width: "15%",
+        text: "Hide",
+        onPressed: function(){
+        	slider_drawer.hide();
+        }
+    });
+    page.add(pageTxtBtnShow);
+    slider_drawer.add(sliderTxtBtnHide);
+    
+    page.show();
 })();
-*/

@@ -1,10 +1,11 @@
 (function(){
-	var root = globals.APP_URL + 'pages/UI-Elements/' = [
-		['Sliders', root + 'slider-drawer/index.js'],
-		['Image Buttons', root + 'image-buttons/index.js'],
-		['Text Buttons', root + 'text-buttons/index.js'],
+	var root = globals.APP_URL + 'pages/UI-Elements/', links = [
+		['Slider', root + 'slider/index.js'],
+		['Slider Drawer', root + 'slider-drawer/index.js'],
+		['Image Button', root + 'image-button/index.js'],
+		['Text Button', root + 'text-button/index.js'],
 		['Search Bar', root + 'searchbar/index.js'],
 		['RepeatBox', root + 'repeatbox/index.js']
 	];
-	createPageLinks('UIElementsIdx', links);
+	createPageLinksAndShow('UIElementsIdx', links);
 })();

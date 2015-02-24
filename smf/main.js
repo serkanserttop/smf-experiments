@@ -41,7 +41,9 @@ function createPageUrlLoadTextButton(parent, name, url){
 }
 function createPageLinks(pageName, links, targetName){
 	if(!Pages[pageName]){
-		Pages[pageName] = new SMF.UI.Page({});
+		Pages[pageName] = new SMF.UI.Page({
+			onKeyPress: keys.page.onKeyPress
+		});
 	}
 	var page = Pages[pageName];
 	if(!targetName){
@@ -68,7 +70,10 @@ function createPageLinks(pageName, links, targetName){
 	target.orientation = SMF.UI.Orientation.vertical;
 	target.autosize = true;
 }
-
+function createPageLinksAndShow(pageName, links, targetName){
+	createPageLinks(pageName, links, targetName);
+	Pages[pageName].show();
+}
 keys = {
 	page: {
 		showNavigationBar : true,

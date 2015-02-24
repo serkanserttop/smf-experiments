@@ -4,5 +4,5 @@
 		['Es6 Test', globals.APP_URL + 'experiment/es6/es6.js'],
 		['Exit', globals.APP_URL + 'exit.js'],
 	];
-	createPageLinks('PagesIdx', links);
+	createPageLinksAndShow('PagesIdx', links);
 })();
