@@ -1,79 +1,118 @@
 /*globals load, include, globals, keys, Pages, Application, SMF, _*/
 
-function displayByLimit(controls, limit){
-	limit = limit || 10;
-	if(!(controls instanceof Array)){
-		controls = Object.keys(controls);
+var helpers = (function(){
+	function displayByLimit(controls, limit){
+		limit = limit || 10;
+		if(!(controls instanceof Array)){
+			controls = Object.keys(controls);
+		}
+		var stack = [];
+		for(var i = 0; i < controls.length; i++){
+			stack.push(controls[i]);
+			if((i + 1) % limit === 0){
+				alert(stack.join(', '));
+				stack = [];
+			}
+		}
+		alert(stack.join(', '));
 	}
-	var stack = [];
-	for(var i = 0; i < controls.length; i++){
-		stack.push(controls[i]);
-		if((i + 1) % limit === 0){
-			alert(stack.join(', '));
-			stack = [];
+	function displayTypeAndNameOfControls(controls, start){
+		var len = Pages.Page1.ScrollView.controls.length;
+		start = start || 0;
+		for(var i = start; i < len; i++){
+			var ctrl = Pages.Page1.ScrollView.controls[i];
+			alert(ctrl.type + ', ' + ctrl.name);
 		}
 	}
-	alert(stack.join(', '));
-}
-function displayTypeAndNameOfControls(controls, start){
-	var len = Pages.Page1.ScrollView.controls.length;
-	start = start || 0;
-	for(var i = start; i < len; i++){
-		var ctrl = Pages.Page1.ScrollView.controls[i];
-		alert(ctrl.type + ', ' + ctrl.name);
-	}
-}
-function removeChildren(parent, start, stop){
-	var end = stop || parent.controls.length;
-	var begin = start || 0;
-	for(var i = end; i > begin - 1; i--){
-		parent.remove(parent.controls[i]);
-	}
-}
-function createPageUrlLoadTextButton(parent, name, url){
-	var txtBtn = new SMF.UI.TextButton({
-		text: name,
-		onPressed: function(){
-			include(url);
+	function removeChildren(parent, start, stop){
+		var end = stop || parent.controls.length;
+		var begin = start || 0;
+		for(var i = end; i > begin - 1; i--){
+			parent.remove(parent.controls[i]);
 		}
-	});
-	parent.add(txtBtn);
-}
-function createPageLinks(pageName, links, targetName){
-	if(!Pages[pageName]){
-		Pages[pageName] = new SMF.UI.Page({
-			onKeyPress: keys.page.onKeyPress
+	}
+	function createPageUrlLoadTextButton(parent, txt, url){
+		var txtBtn = new SMF.UI.TextButton({
+			text: txt,
+			onPressed: function(){
+				if(typeof url === 'function'){
+					url();
+				}
+				else if(typeof url === 'string'){
+					include(url);	
+				}
+			}
 		});
+		parent.add(txtBtn);
 	}
-	var page = Pages[pageName];
-	if(!targetName){
-		targetName = 'ScrollView';
+	function createPageLinks(pageName, links, targetName, dontAddBack){
+		if(!Pages[pageName]){
+			Pages[pageName] = new SMF.UI.Page({
+				onKeyPress: keys.page.onKeyPress
+			});
+		}
+		var page = Pages[pageName];
+		if(!targetName){
+			targetName = 'ScrollView';
+		}
+		if(page[targetName]){
+			page.remove(page[targetName]);
+		}
+		var target = page[targetName] = new SMF.UI.ScrollView({
+	    top: "10%",
+	    left: "10%",
+	    width: "80%",
+	    height: "80%",
+	    contentHeight: "100%",
+	    contentWidth: "100%"
+		});
+		page.add(target);
+		
+		if(!dontAddBack){
+			links.push(['Back', function(){ Pages.back(); }]);
+		}
+		
+		for(var i = 0; i < links.length; i++){
+			var row = links[i];
+			helpers.createPageUrlLoadTextButton(target, row[0], row[1]);
+		}
+		target.layoutType = SMF.UI.LayoutType.linear;
+		target.orientation = SMF.UI.Orientation.vertical;
+		target.autosize = true;
 	}
-	if(page[targetName]){
-		page.remove(page[targetName]);
+	function createPageLinksAndShow(pageName, links, targetName, dontAddBack){
+		helpers.createPageLinks(pageName, links, targetName, dontAddBack);
+		Pages[pageName].show();
 	}
-	var target = page[targetName] = new SMF.UI.ScrollView({
-    top: "10%",
-    left: "10%",
-    width: "80%",
-    height: "80%",
-    contentHeight: "100%",
-    contentWidth: "100%"
-	});
-	page.add(target);
+	function txt_btn_back(parent, obj){
+		if(!obj){
+			obj = parent;
+			parent = false;
+		}
+		var btn = new SMF.UI.TextButton(
+		  _.extend({
+		    text: "Back",
+		    onPressed: function(e) {
+		      Pages.back();
+		    }
+		  }, obj)
+		);
+		if(parent){
+			parent.add(btn);	
+		}
+		return btn;
+	}
+	return {
+		createPageUrlLoadTextButton: createPageUrlLoadTextButton,
+		createPageLinks: createPageLinks,
+		createPageLinksAndShow: createPageLinksAndShow,
+		displayByLimit: displayByLimit,
+		displayTypeAndNameOfControls: displayTypeAndNameOfControls,
+		removeChildren: removeChildren,
+		txt_btn_back: txt_btn_back
+	}	
+})();
 
-	for(var i = 0; i < links.length; i++){
-		var row = links[i];
-		createPageUrlLoadTextButton(target, row[0], row[1]);
-	}
-	target.layoutType = SMF.UI.LayoutType.linear;
-	target.orientation = SMF.UI.Orientation.vertical;
-	target.autosize = true;
-}
-function createPageLinksAndShow(pageName, links, targetName){
-	createPageLinks(pageName, links, targetName);
-	Pages[pageName].show();
-}
 keys = {
 	page: {
 		showNavigationBar : true,
@@ -186,11 +225,11 @@ globals.environment.setServer('c9.smf_experiments');
 	if(typeof Backbone === 'undefined'){
 		links.push(['Add Backbone', libs_url + 'third-party/backbone-min.js']);
 	}
-	createPageLinks('Page1', links)
-	/*removeChildren(Pages.Page1.ScrollView, 2);
+	helpers.createPageLinks('Page1', links);
+	/*helpers.removeChildren(Pages.Page1.ScrollView, 2);
 
 	for(var i = 0; i < links.length; i++){
 		var row = links[i];
-		createPageUrlLoadTextButton(Pages.Page1.ScrollView, row[0], row[1]);
+		helpers.createPageUrlLoadTextButton(Pages.Page1.ScrollView, row[0], row[1]);
 	}*/
 })();

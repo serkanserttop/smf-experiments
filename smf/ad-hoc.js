@@ -8,9 +8,9 @@
 //var controls = _.keys(Pages.Page1.controls[0]);
 //Pages.Page1.ScrollView.Editbox.fillColor = 'red';
 
-//displayByLimit(Pages.Page1);
-//displayByLimit(Pages.Page1.controls[0]);
-//displayByLimit(Pages.Page1.ScrollView.controls[0])
+//helpers.displayByLimit(Pages.Page1);
+//helpers.displayByLimit(Pages.Page1.controls[0]);
+//helpers.displayByLimit(Pages.Page1.ScrollView.controls[0])
 
 //include(globals.APP_URL + '/addPages.js');
 //alert('hello local development');

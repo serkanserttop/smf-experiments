@@ -13,16 +13,6 @@
     });
     page.add(slider_drawer);
 
-    /*var sliderTxtBtn = new SMF.UI.TextButton({
-        top: "10%",
-        left: "10%",
-        text: "Button",
-        onPressed: function(){
-        	alert('Hello from Text Button inside of Slider Drawer');
-        }
-    });
-    slider_drawer.add(sliderTxtBtn);*/
-    
     var pageTxtBtnShow = new SMF.UI.TextButton({
         top: "10%",
         left: "30%",
