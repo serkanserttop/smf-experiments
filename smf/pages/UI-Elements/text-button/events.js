@@ -1,16 +1,16 @@
-/* globals load, include, helpers, Pages, SMF, globals, keys*/
+/* globals load, include, App.helpers, Pages, SMF, globals, keys*/
 (function(){
   var toggleImages;
-  var HOME_URL = globals.APP_URL;
+  var HOME_URL = App.globals.APP_URL;
   var pageName = 'UIElementsTextButtonExEvents';
   var page = Pages[pageName] = new SMF.UI.Page({
-    onKeyPress: keys.page.onKeyPress
+    onKeyPress: App.keys.page.onKeyPress
   });
   page.clear();
   var label;
   txt_btn_events();
   txt_btn_clear();
-  helpers.txt_btn_back(page, {top: '30%', left: '10%'});
+  App.helpers.txt_btn_back(page, {top: '30%', left: '10%'});
   label_event();
   
   function appendText(obj, txt){

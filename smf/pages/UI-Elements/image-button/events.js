@@ -1,16 +1,16 @@
-/* globals load, include, helpers, Pages, SMF, globals, keys*/
+/* globals load, include, App.helpers, Pages, SMF, globals, keys*/
 (function(){
   var toggleImages;
-  var HOME_URL = globals.APP_URL;
+  var HOME_URL = App.globals.APP_URL;
   var pageName = 'UIElementsImageButtonExEvents';
   var page = Pages[pageName] = new SMF.UI.Page({
-    onKeyPress: keys.page.onKeyPress
+    onKeyPress: App.keys.page.onKeyPress
   });
   page.clear();
   var label;
   txt_btn_clear();
   txt_btn_togle_hide();
-  helpers.txt_btn_back(page, {top: '40%', left: '10%'});
+  App.helpers.txt_btn_back(page, {top: '40%', left: '10%'});
   label_event();
   
   var img_btn1 = img_btn_addtocart();
@@ -27,9 +27,9 @@
       top : '10%',
       touchEnabled : true,
       imageFillType : SMF.UI.ImageFillType.autosize,
-      defaultImage : globals.APP_URL + 'images/addtocart-button01.png',
-      highlightedImage : globals.APP_URL + 'images/addtocart-button02.png',
-      inactiveImage : globals.APP_URL + 'images/addtocart-button03.png',
+      defaultImage : App.globals.APP_URL + 'images/addtocart-button01.png',
+      highlightedImage : App.globals.APP_URL + 'images/addtocart-button02.png',
+      inactiveImage : App.globals.APP_URL + 'images/addtocart-button03.png',
       text : '',
       onDoubleTap: function(e) {
         appendText(label, 'onDoubleTap called');

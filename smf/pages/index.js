@@ -1,9 +1,9 @@
-/*globals globals, helpers*/
+/*globals globals, App.helpers*/
 (function(){
-	var pages_url = globals.APP_URL + 'pages/', libs_url = globals.APP_URL + 'libs/', links = [
+	var pages_url = App.globals.APP_URL + 'pages/', libs_url = App.globals.APP_URL + 'libs/', links = [
 		['UI Elements', pages_url + 'UI-Elements/index.js'],
-		['Es6 Test', globals.APP_URL + 'experiment/es6/es6.js'],
-		['Exit', globals.APP_URL + 'exit.js'],
+		['Es6 Test', App.globals.APP_URL + 'experiment/es6/es6.js'],
+		['Exit', App.globals.APP_URL + 'exit.js']
 	];
-	helpers.createPageLinksAndShow('PagesIdx', links);
+	App.helpers.createPageLinksAndShow('PagesIdx', links);
 })();

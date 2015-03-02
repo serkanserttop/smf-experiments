@@ -1,6 +1,6 @@
 (function(){
-	var root = globals.APP_URL + 'pages/UI-Elements/slider-drawer/', links = [
+	var root = App.globals.APP_URL + 'pages/UI-Elements/slider-drawer/', links = [
 		['Example 1', root + 'ex01.js']
 	];
-	helpers.createPageLinksAndShow('UIElementsSliderDrawerIdx', links);
+	App.helpers.createPageLinksAndShow('UIElementsSliderDrawerIdx', links);
 })();

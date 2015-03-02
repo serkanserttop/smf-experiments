@@ -1,0 +1,12 @@
+image
+	requires paint
+components
+	add
+	remove
+	items
+		label
+		image
+		textbutton
+		imagebutton
+		
+

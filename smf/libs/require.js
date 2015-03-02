@@ -13,12 +13,10 @@ function require(){
 	function getKeys(){
 		return Object.keys(scripts);
 	}
-	
 	return {
-		"attach": attach,
-		"execute": execute,
-		"getKeys": getKeys
-	};
-	
+		attach: attach,
+		execute: execute,
+		getKeys: getKeys
+	}
 }
 require = require();

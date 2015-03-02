@@ -2,7 +2,7 @@
 (function (){;
 	var pageName = 'UIElementsSliderEx01';
 	var page = Pages[pageName] = new SMF.UI.Page({
-		onKeyPress: keys.page.onKeyPress
+		onKeyPress: App.keys.page.onKeyPress
 	});
 	page.clear();
 
@@ -52,5 +52,6 @@
 	    }
 	});
 	page.add(txt_btn);
+	App.helpers.txt_btn_back(page, {top: '60%', left: '10%'});
 	page.show();
 })();

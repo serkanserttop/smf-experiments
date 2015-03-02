@@ -1,0 +1,4 @@
+onCancel
+onSearchStart
+onSearchSubmit
+onTextChange

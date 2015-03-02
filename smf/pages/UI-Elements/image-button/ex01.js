@@ -1,8 +1,8 @@
-/*globals SMF, globals, keys, Pages, helpers*/
+/*globals SMF, globals, keys, Pages, App.helpers*/
 (function(){
   var pageName = 'UIElementsImageButtonEx01';
 	var page = Pages[pageName] = new SMF.UI.Page({
-		onKeyPress: keys.page.onKeyPress
+		onKeyPress: App.keys.page.onKeyPress
 	});
 	page.clear();
   var img_btn1 = img_btn_addtocart();
@@ -16,9 +16,9 @@
       top : '10%',
       touchEnabled : true,
       imageFillType : SMF.UI.ImageFillType.autosize,
-      defaultImage : globals.APP_URL + 'images/addtocart-button01.png',
-      highlightedImage : globals.APP_URL + 'images/addtocart-button02.png',
-      inactiveImage : globals.APP_URL + 'images/addtocart-button03.png',
+      defaultImage : App.globals.APP_URL + 'images/addtocart-button01.png',
+      highlightedImage : App.globals.APP_URL + 'images/addtocart-button02.png',
+      inactiveImage : App.globals.APP_URL + 'images/addtocart-button03.png',
       text : ''
     });
     return img_btn;
@@ -44,6 +44,6 @@
     page.add(btn);
   }
   
-  helpers.txt_btn_back(page, {top: '50%', left: '10%'});
+  App.helpers.txt_btn_back(page, {top: '50%', left: '10%'});
   page.show();
 })();

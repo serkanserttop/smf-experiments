@@ -1,10 +1,10 @@
 /* globals load, include, Pages, SMF, globals, keys*/
 (function(){
   var toggleImages;
-  var HOME_URL = globals.APP_URL;
+  var HOME_URL = App.globals.APP_URL;
   var pageName = 'UIElementsTextButtonEx01';
   var page = Pages[pageName] = new SMF.UI.Page({
-    onKeyPress: keys.page.onKeyPress
+    onKeyPress: App.keys.page.onKeyPress
   });
   page.clear();
   
@@ -44,24 +44,10 @@
     });
     page.add(btn);
   }
-  /*
-  function img_btn1(){
-    var btn = new SMF.UI.TextButton({
-      top: "30%",
-      left: "10%",
-      text: "Dynamic Unnamed Button",
-      fillColor: "red",
-      fontColor: "white",
-      onPressed: function(e) {
-        toggleColors.call(this);
-      }
-    });
-    page.add(btn);
-  }*/
   
   function displayProps(obj){
     var keys = Object.keys(obj);
-    alert(keys.join(', '));
+    alert(App.keys.join(', '));
   }
   
   function img_btn2(){
@@ -78,7 +64,6 @@
       //,text : "Placeholder"
       onPressed : function(e){
         alert('hello');
-        //displayProps(this);
       }
     });
     page.add(btn);
@@ -94,7 +79,9 @@
       //set image according to the state, but how?
     }
   })();
-  //page.ImageButton1.alpha = 0.5;
+  
+  App.helpers.txt_btn_back(page, {top: '60%', left: '10%'});
+
   page.show();
     
 })()

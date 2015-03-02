@@ -2,7 +2,7 @@
 (function(){
     var pageName = 'UIElementsSliderDrawerEx01';
 	var page = Pages[pageName] = new SMF.UI.Page({
-		onKeyPress: keys.page.onKeyPress
+		onKeyPress: App.keys.page.onKeyPress
 	});
 	page.clear();
     var slider_drawer = new SMF.UI.SliderDrawer({
@@ -34,6 +34,8 @@
     });
     page.add(pageTxtBtnShow);
     slider_drawer.add(sliderTxtBtnHide);
+
+    App.helpers.txt_btn_back(page, {top: '60%', left: '10%'});
     
     page.show();
 })();
