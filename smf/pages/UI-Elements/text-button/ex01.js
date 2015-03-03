@@ -23,7 +23,7 @@
     page.textButton1 = new SMF.UI.TextButton({
       top: "10%",
       left: "10%",
-      text: "Dynamic Named Button",
+      text: "Dynamic Button",
       onPressed: function(e) {
         toggleColors.call(this);
       }

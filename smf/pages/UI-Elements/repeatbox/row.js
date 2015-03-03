@@ -1,4 +1,6 @@
 /*globals SMF, Pages, keys*/
+alert('not done');
+/*
 (function(){
 	var lastRandomNumberIndex = 0;
 
@@ -16,7 +18,7 @@
 		repeatBox.refresh();
 	}
 
-	var pageName = 'UIElementsRepeatBoxEx02', keys = App.keys;
+	var pageName = 'UIElementsRepeatBoxRow', keys = App.keys;
 	var page = Pages[pageName] = new SMF.UI.Page({
 		fillColor: 'violet',
 		onKeyPress: keys.page.onKeyPress
@@ -116,3 +118,4 @@
 	//alert(page.controls[1].name);
 	//alert(Object.keys(page.controls[1]));
 })();
+*/
