@@ -26,9 +26,9 @@
 	});
 	var rBox = new SMF.UI.RepeatBox({
 		width : "80%",
-		height : "100%",
+		height : "90%",
 		left : 0,
-		top : "0",
+		top : "10%",
 		dataSource : static_array,
 		showScrollbar : true,
 		onRowRender: function onRowRender(e){
@@ -56,13 +56,14 @@
 
 	var search_bar = new SMF.UI.SearchBar(_.extend({
 		placeHolder: "Enter Name",
-		top: "10%",
+		top: "0",
 		left: "10%",
+		height: '10%',
 		width: "100%"
 		,text: "" //iOS fix for unwanted quotes
 		,onTextChange: function(e){
-			var search_key = this.text;
-			var results = _.filter(static_array, function(obj){ return obj.lang.indexOf(search_key) !== -1; });
+			var search_key = this.text.toLowerCase(), results;
+			results = _.filter(static_array, function(obj){ return obj.lang.toLowerCase().indexOf(search_key) !== -1; });	
 			rBox.dataSource = results;
 			rBox.refresh();
 		}
