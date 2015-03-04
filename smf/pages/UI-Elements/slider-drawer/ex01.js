@@ -5,6 +5,7 @@
 		onKeyPress: App.keys.page.onKeyPress
 	});
 	page.clear();
+
     var slider_drawer = new SMF.UI.SliderDrawer({
         width : '30%',
         touchEnabled : 'true',
@@ -22,6 +23,7 @@
         	slider_drawer.show();
         }
     });
+    page.add(pageTxtBtnShow);
     
     var sliderTxtBtnHide = new SMF.UI.TextButton({
         top: "30%",
@@ -32,7 +34,6 @@
         	slider_drawer.hide();
         }
     });
-    page.add(pageTxtBtnShow);
     slider_drawer.add(sliderTxtBtnHide);
 
     App.helpers.txt_btn_back(page, {top: '60%', left: '10%'});

@@ -143,7 +143,21 @@ App.helpers = (function(){
 		}
 		createPageLinks('Page1', links);
 	}
+	function updateScripts(){
+		var apps_url = globals.APP_URL + 'app/';
+		var host = globals.HOST_URL;
+		include(apps_url + 'App.globals.js');
+		include(apps_url + 'App.keys.js');
+		include(apps_url + 'App.helpers.js');
+		include(apps_url + 'App.helpers.generic.js');
+		include(apps_url + 'App.helpers.generic.eventLogGenerator.js');
+		//need to make sure full path is given, otherwise a bug is created as globals !== App.globals at this stage
+		App.globals.HOST_URL = host;
+		App.globals.APP_URL = host + '/';
+		refreshMainLinks();
+	}
 	return {
+		generic: {},
 		createPageUrlLoadTextButton: createPageUrlLoadTextButton,
 		createPageLinks: createPageLinks,
 		createPageLinksAndShow: createPageLinksAndShow,
@@ -151,6 +165,7 @@ App.helpers = (function(){
 		displayTypeAndNameOfControls: displayTypeAndNameOfControls,
 		refreshMainLinks: refreshMainLinks,
 		removeChildren: removeChildren,
-		txt_btn_back: txt_btn_back
+		txt_btn_back: txt_btn_back,
+		updateScripts: updateScripts
 	};
 })();

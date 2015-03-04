@@ -31,36 +31,16 @@
       highlightedImage : App.globals.APP_URL + 'images/addtocart-button02.png',
       inactiveImage : App.globals.APP_URL + 'images/addtocart-button03.png',
       text : '',
-      onDoubleTap: function(e) {
-        appendText(label, 'onDoubleTap called');
-      },
-      onHide: function(e) {
-        appendText(label, 'onHide called');
-      },
-      onLoad: function(e) {
-        appendText(label, 'onLoad called');
-      },
-      onLoadFailure: function(e) {
-        appendText(label, 'onLoadFailure called');
-      },
-      onLongTouch: function(e) {
-          appendText(label, 'onLongTouch called');
-      },
-      onPressed: function(e) {
-          appendText(label, 'onPressed called');
-      },
-      onShow: function(e) {
-          appendText(label, 'onShow called');
-      },
-      onTouch: function(e) {
-          appendText(label, 'onTouch called');
-      },
-      onTouchEnabled: function(e) {
-        appendText(label, 'onTouchEnabled called');
-      },
-      onTouchEnded: function(e) {
-          appendText(label, 'onTouchEnded called');
-      }
+      onDoubleTap: function(e) { appendText(label, 'onDoubleTap'); },
+      onHide: function(e) { appendText(label, 'onHide'); },
+      onLoad: function(e) { appendText(label, 'onLoad'); },
+      onLoadFailure: function(e) { appendText(label, 'onLoadFailure'); },
+      onLongTouch: function(e) { appendText(label, 'onLongTouch'); },
+      onPressed: function(e) { appendText(label, 'onPressed'); },
+      onShow: function(e) { appendText(label, 'onShow'); },
+      onTouch: function(e) { appendText(label, 'onTouch'); },
+      onTouchEnabled: function(e) { appendText(label, 'onTouchEnabled'); },
+      onTouchEnded: function(e) { appendText(label, 'onTouchEnded'); }
     });
     return img_btn;
   }
