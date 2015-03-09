@@ -1,5 +1,55 @@
 App.helpers = (function(){
-	var globals = App.globals, keys = App.keys;
+	var globals = App.globals, defaults = App.defaults;
+	function createPageLinks(pageName, links, targetName, dontShow){
+		if(!Pages[pageName]){
+			Pages[pageName] = new SMF.UI.Page({
+				onKeyPress: defaults.page.onKeyPress
+			});
+		}
+		var page = Pages[pageName];
+		if(!targetName){
+			targetName = 'ScrollView';
+		}
+		if(page[targetName]){
+			page.remove(page[targetName]);
+		}
+		var target = page[targetName] = new SMF.UI.ScrollView({
+			top: "10%",
+			left: "10%",
+			width: "80%",
+			height: "80%",
+			contentHeight: "100%",
+			contentWidth: "100%"
+		});
+		page.add(target);
+		
+		for(var i = 0; i < links.length; i++){
+			var row = links[i];
+			createPageUrlLoadTextButton(target, row[0], row[1]);
+		}
+		target.layoutType = SMF.UI.LayoutType.linear;
+		target.orientation = SMF.UI.Orientation.vertical;
+		target.autosize = true;
+		page.onShow = function(){
+			App.defaults.header(page, pageName);
+		}
+		//if(dontShow !== true){ page.show(); }
+		page.show();
+	}
+	function createPageUrlLoadTextButton(parent, txt, url){
+		var txtBtn = new SMF.UI.TextButton({
+			text: txt,
+			onPressed: function(){
+				if(typeof url === 'function'){
+					url();
+				}
+				else if(typeof url === 'string'){
+					include(url);	
+				}
+			}
+		});
+		parent.add(txtBtn);
+	}
 	function displayByLimit(controls, limit){
 		limit = limit || 10;
 		if(!(controls instanceof Array)){
@@ -22,84 +72,6 @@ App.helpers = (function(){
 			var ctrl = Pages.Page1.ScrollView.controls[i];
 			alert(ctrl.type + ', ' + ctrl.name);
 		}
-	}
-	function removeChildren(parent, start, stop){
-		var end = stop || parent.controls.length;
-		var begin = start || 0;
-		for(var i = end; i > begin - 1; i--){
-			parent.remove(parent.controls[i]);
-		}
-	}
-	function createPageUrlLoadTextButton(parent, txt, url){
-		var txtBtn = new SMF.UI.TextButton({
-			text: txt,
-			onPressed: function(){
-				if(typeof url === 'function'){
-					url();
-				}
-				else if(typeof url === 'string'){
-					include(url);	
-				}
-			}
-		});
-		parent.add(txtBtn);
-	}
-	function createPageLinks(pageName, links, targetName, dontAddBack){
-		if(!Pages[pageName]){
-			Pages[pageName] = new SMF.UI.Page({
-				onKeyPress: keys.page.onKeyPress
-			});
-		}
-		var page = Pages[pageName];
-		if(!targetName){
-			targetName = 'ScrollView';
-		}
-		if(page[targetName]){
-			page.remove(page[targetName]);
-		}
-		var target = page[targetName] = new SMF.UI.ScrollView({
-			top: "10%",
-			left: "10%",
-			width: "80%",
-			height: "80%",
-			contentHeight: "100%",
-			contentWidth: "100%"
-		});
-		page.add(target);
-		
-		if(!dontAddBack){
-			links.push(['Back', function(){ Pages.back(); }]);
-		}
-		
-		for(var i = 0; i < links.length; i++){
-			var row = links[i];
-			createPageUrlLoadTextButton(target, row[0], row[1]);
-		}
-		target.layoutType = SMF.UI.LayoutType.linear;
-		target.orientation = SMF.UI.Orientation.vertical;
-		target.autosize = true;
-	}
-	function createPageLinksAndShow(pageName, links, targetName, dontAddBack){
-		createPageLinks(pageName, links, targetName, dontAddBack);
-		Pages[pageName].show();
-	}
-	function txt_btn_back(parent, obj){
-		if(!obj){
-			obj = parent;
-			parent = false;
-		}
-		var btn = new SMF.UI.TextButton(
-			_.extend({
-				text: "Back",
-				onPressed: function(e) {
-					Pages.back();
-				}
-			}, obj)
-		);
-		if(parent){
-			parent.add(btn);	
-		}
-		return btn;
 	}
 	function refreshMainLinks(){
 		var pages_url = globals.APP_URL + 'pages/', libs_url = globals.APP_URL + 'libs/', links = [
@@ -143,11 +115,42 @@ App.helpers = (function(){
 		}
 		createPageLinks('Page1', links);
 	}
+	function removeChildren(parent, start, stop){
+		var end = stop || parent.controls.length;
+		var begin = start || 0;
+		for(var i = end; i > begin - 1; i--){
+			parent.remove(parent.controls[i]);
+		}
+	}
+	function txt_btn_back(parent, obj){
+		if(!obj){
+			obj = parent;
+			parent = false;
+		}
+		var btn = new SMF.UI.TextButton(
+			_.extend({
+				text: "Back",
+				onPressed: function(e) {
+					Pages.back();
+				}
+			}, obj)
+		);
+		if(parent){
+			parent.add(btn);	
+		}
+		return btn;
+	}
 	function updateScripts(){
 		var apps_url = globals.APP_URL + 'app/';
 		var host = globals.HOST_URL;
 		include(apps_url + 'App.globals.js');
-		include(apps_url + 'App.keys.js');
+		include(apps_url + 'App.defaults.js');
+		if(Device.deviceOS === 'Android'){
+			include(apps_url + 'App.defaults.android.js');
+		}
+		else{ 
+			include(apps_url + 'App.defaults.iOS.js');
+		}
 		include(apps_url + 'App.helpers.js');
 		include(apps_url + 'App.helpers.generic.js');
 		include(apps_url + 'App.helpers.generic.eventLogGenerator.js');
@@ -160,7 +163,7 @@ App.helpers = (function(){
 		generic: {},
 		createPageUrlLoadTextButton: createPageUrlLoadTextButton,
 		createPageLinks: createPageLinks,
-		createPageLinksAndShow: createPageLinksAndShow,
+		createPageLinksAndShow: createPageLinks,//BC
 		displayByLimit: displayByLimit,
 		displayTypeAndNameOfControls: displayTypeAndNameOfControls,
 		refreshMainLinks: refreshMainLinks,

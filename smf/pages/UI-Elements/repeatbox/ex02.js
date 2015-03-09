@@ -16,10 +16,11 @@
 		repeatBox.refresh();
 	}
 
-	var pageName = 'UIElementsRepeatBoxEx02', keys = App.keys;
-	var page = Pages[pageName] = new SMF.UI.Page({
+	var pageName = 'UIElementsRepeatBoxEx02', defaults = App.defaults;
+	var page = new SMF.UI.Page({
+    name: pageName,
 		fillColor: 'violet',
-		onKeyPress: keys.page.onKeyPress
+		onKeyPress: defaults.page.onKeyPress
 	});
 	page.clear();
 

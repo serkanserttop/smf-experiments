@@ -1,4 +1,4 @@
-App.keys = {
+App.defaults = {
 	page: {
 		showNavigationBar : true,
 		showStatusBar : false,

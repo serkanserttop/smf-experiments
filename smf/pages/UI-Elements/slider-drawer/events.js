@@ -1,10 +1,11 @@
 /*globals SMF, Pages, keys*/
 (function(){
   
-  var pageName = 'UIElementsSliderDrawerEvents', keys = App.keys, generic = App.helpers.generic;
-	var page = Pages[pageName] = new SMF.UI.Page({
+  var pageName = 'UIElementsSliderDrawerEvents', defaults = App.defaults, generic = App.helpers.generic;
+	var page = new SMF.UI.Page({
+    name: pageName,
 		fillColor:"wheat",
-		onKeyPress: keys.page.onKeyPress
+		onKeyPress: defaults.page.onKeyPress
 	});
 	page.clear();
 

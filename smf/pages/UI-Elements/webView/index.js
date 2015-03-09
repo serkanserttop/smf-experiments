@@ -4,5 +4,5 @@
 		['Example 2', root + 'ex02.js'],
 		['Example StackOverflow', root + 'ex-stackoverflow-from-ex02.js']
 	];
-	App.helpers.createPageLinksAndShow('UIElementsWebViewIdx', links);
+	App.helpers.createPageLinks('UIElementsWebViewIdx', links);
 })();

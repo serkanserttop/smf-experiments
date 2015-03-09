@@ -76,4 +76,6 @@
 	page.add(search_bar);
 	page.show();
 
+	App.defaults.header(page, pageName);
+
 })();

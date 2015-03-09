@@ -3,8 +3,9 @@
   var toggleImages;
   var HOME_URL = App.globals.APP_URL;
   var pageName = 'UIElementsTextButtonEx01';
-  var page = Pages[pageName] = new SMF.UI.Page({
-    onKeyPress: App.keys.page.onKeyPress
+  var page = new SMF.UI.Page({
+    name: pageName,
+    onKeyPress: App.defaults.page.onKeyPress
   });
   page.clear();
   
@@ -47,7 +48,7 @@
   
   function displayProps(obj){
     var keys = Object.keys(obj);
-    alert(App.keys.join(', '));
+    alert(App.defaults.join(', '));
   }
   
   function img_btn2(){

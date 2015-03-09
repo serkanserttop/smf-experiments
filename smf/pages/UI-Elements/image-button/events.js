@@ -2,15 +2,16 @@
 (function(){
   var toggleImages;
   var HOME_URL = App.globals.APP_URL;
-  var pageName = 'UIElementsImageButtonExEvents';
-  var page = Pages[pageName] = new SMF.UI.Page({
-    onKeyPress: App.keys.page.onKeyPress
+  var pageName = 'UIElementsImageButtonEvents';
+  var page = new SMF.UI.Page({
+    name: pageName,
+    onKeyPress: App.defaults.page.onKeyPress
   });
   page.clear();
+
   var label;
   txt_btn_clear();
   txt_btn_togle_hide();
-  App.helpers.txt_btn_back(page, {top: '40%', left: '10%'});
   label_event();
   
   var img_btn1 = img_btn_addtocart();
@@ -86,7 +87,12 @@
     page.add(label);
   }
   
+  
   page.show();
-    
+  App.defaults.header(page, pageName);
+  page.actionBar.displayShowHomeEnabled = true;
+  page.actionBar.title = 'test';
+  page.actionBar.onHomeIconItemSelected = function(){ Pages.back(); };
+
 })()
 

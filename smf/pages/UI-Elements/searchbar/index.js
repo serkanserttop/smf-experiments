@@ -3,7 +3,8 @@
 	var root = App.globals.APP_URL + 'pages/UI-Elements/searchbar/', links = [
 		['Example 1', root + 'ex01.js'],
 		['Events', root + 'events.js'],
-		['Header', root + 'header.js']
+		['Header', root + 'header.js'],
+		['Header At NavBar', root + 'header-with-navbar.js']
 	];
-	App.helpers.createPageLinksAndShow('UIElementsSearchbarIdx', links);
+	App.helpers.createPageLinks('UIElementsSearchbarIdx', links);
 })();

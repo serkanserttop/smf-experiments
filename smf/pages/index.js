@@ -7,7 +7,13 @@
 			var apps_url = globals.APP_URL + 'app/';
 			var host = globals.HOST_URL + '';
 			include(apps_url + 'App.globals.js');
-			include(apps_url + 'App.keys.js');
+			include(apps_url + 'App.defaults.js');
+			if(Device.deviceOS === 'Android'){
+				include(apps_url + 'App.defaults.android.js');
+			}
+			else{
+				include(apps_url + 'App.defaults.iOS.js');
+			}
 			include(apps_url + 'App.helpers.js');
 			include(apps_url + 'App.helpers.generic.js');
 			include(apps_url + 'App.helpers.generic.eventLogGenerator.js');

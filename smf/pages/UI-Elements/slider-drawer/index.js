@@ -3,5 +3,5 @@
 		['Example 1', root + 'ex01.js'],
 		['Events', root + 'events.js']
 	];
-	App.helpers.createPageLinksAndShow('UIElementsSliderDrawerIdx', links);
+	App.helpers.createPageLinks('UIElementsSliderDrawerIdx', links);
 })();

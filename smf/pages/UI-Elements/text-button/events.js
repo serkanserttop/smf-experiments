@@ -3,8 +3,9 @@
   var toggleImages;
   var HOME_URL = App.globals.APP_URL;
   var pageName = 'UIElementsTextButtonExEvents';
-  var page = Pages[pageName] = new SMF.UI.Page({
-    onKeyPress: App.keys.page.onKeyPress
+  var page = new SMF.UI.Page({
+    name: pageName,
+    onKeyPress: App.defaults.page.onKeyPress
   });
   page.clear();
   var label;

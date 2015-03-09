@@ -1,9 +1,10 @@
 /*globals SMF, Pages, keys*/
 (function(){
-  var pageName = 'UIElementsSearchBarEx02', keys = App.keys;
-	var page = Pages[pageName] = new SMF.UI.Page({
+  var pageName = 'UIElementsSearchBarEx02', defaults = App.defaults;
+	var page = new SMF.UI.Page({
+    name: pageName,
 		fillColor:"red",
-		onKeyPress: keys.page.onKeyPress
+		onKeyPress: defaults.page.onKeyPress
 	});
 	page.clear();
 

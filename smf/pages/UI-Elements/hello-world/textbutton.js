@@ -8,5 +8,5 @@
 	});
 	page.add(btn);
 	page.show();
-	App.helpers.txt_btn_back(page, {top: '90%', left: '10%'});
+	App.defaults.header(page, 'Hello World - TextButton');
 })();

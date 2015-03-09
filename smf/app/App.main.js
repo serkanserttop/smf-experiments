@@ -2,5 +2,5 @@
 var App = {};
 
 load('App.helpers.js');
-load('App.keys.js');
+load('App.defaults.js');
 load('App.globals.js');

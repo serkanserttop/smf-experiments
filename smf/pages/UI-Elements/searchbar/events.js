@@ -1,18 +1,19 @@
 /*globals SMF, Pages, keys*/
 (function(){
   
-  var pageName = 'UIElementsSearchBarEvents', keys = App.keys, generic = App.helpers.generic;
-	var page = Pages[pageName] = new SMF.UI.Page({
+  var pageName = 'UIElementsSearchBarEvents', defaults = App.defaults, generic = App.helpers.generic;
+	var page = new SMF.UI.Page({
+    name: pageName,
 		fillColor: "wheat",
-		onKeyPress: keys.page.onKeyPress
+		onKeyPress: defaults.page.onKeyPress
 	});
 	page.clear();
 
 	var headerDeviceSpecific;
 	if(Device.deviceOS === "Android"){
 		headerDeviceSpecific = {
-			actionView: true,
-			setActionView: true
+			//actionView: true,
+			//setActionView: true
 			//,icon: 'find appropriate icon'
 		};
 	}
@@ -38,9 +39,9 @@
 		,text: "asd" //iOS fix for unwanted quotes
 	}, headerDeviceSpecific, events));
 
-	App.helpers.txt_btn_back(page, {top: '90%', left: '60%', width: '30%'});
-
 	page.add(search_bar);
 	page.show();
+
+	App.defaults.header(page, pageName);
 
 })();

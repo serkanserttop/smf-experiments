@@ -57,9 +57,10 @@
     return label;
   }
   
-	var pageName = 'UIElementsRepeatBoxEvents', keys = App.keys;
-	var page = Pages[pageName] = new SMF.UI.Page({
-		onKeyPress: keys.page.onKeyPress
+	var pageName = 'UIElementsRepeatBoxEvents', defaults = App.defaults;
+	var page = new SMF.UI.Page({
+    name: pageName,
+		onKeyPress: defaults.page.onKeyPress
 	});
 	page.clear();
 

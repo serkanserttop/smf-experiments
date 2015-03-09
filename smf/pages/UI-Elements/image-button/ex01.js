@@ -1,8 +1,9 @@
 /*globals SMF, globals, keys, Pages, App.helpers*/
 (function(){
   var pageName = 'UIElementsImageButtonEx01';
-	var page = Pages[pageName] = new SMF.UI.Page({
-		onKeyPress: App.keys.page.onKeyPress
+	var page = new SMF.UI.Page({
+    name: pageName,
+		onKeyPress: App.defaults.page.onKeyPress
 	});
 	page.clear();
   var img_btn1 = img_btn_addtocart();
@@ -44,6 +45,6 @@
     page.add(btn);
   }
   
-  App.helpers.txt_btn_back(page, {top: '50%', left: '10%'});
+  App.defaults.header(page, pageName);
   page.show();
 })();

@@ -3,5 +3,5 @@
 		['Example 1', root + 'ex01.js'],
 		['Events', root + 'events.js']
 	];
-	App.helpers.createPageLinksAndShow('UIElementsTextButtonsIdx', links);
+	App.helpers.createPageLinks('UIElementsTextButtonsIdx', links);
 })();

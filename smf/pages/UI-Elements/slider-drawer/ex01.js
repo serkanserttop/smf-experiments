@@ -1,8 +1,9 @@
 /*globals SMF, Pages, keys*/
 (function(){
     var pageName = 'UIElementsSliderDrawerEx01';
-	var page = Pages[pageName] = new SMF.UI.Page({
-		onKeyPress: App.keys.page.onKeyPress
+	var page = new SMF.UI.Page({
+        name: pageName,
+		onKeyPress: App.defaults.page.onKeyPress
 	});
 	page.clear();
 

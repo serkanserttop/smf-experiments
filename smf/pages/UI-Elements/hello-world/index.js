@@ -3,5 +3,5 @@
 		['Label', root + 'label.js'],
 		['Text Button', root + 'textbutton.js']
 	];
-	App.helpers.createPageLinksAndShow('UIElementsHelloWorldIdx', links);
+	App.helpers.createPageLinks('UIElementsHelloWorldIdx', links);
 })();

@@ -5,5 +5,5 @@
 		['Events ', root + 'events.js'],
 		['Row', root + 'row.js']
 	];
-	App.helpers.createPageLinksAndShow('UIElementsRepeatboxIdx', links);
+	App.helpers.createPageLinks('UIElementsRepeatboxIdx', links);
 })();

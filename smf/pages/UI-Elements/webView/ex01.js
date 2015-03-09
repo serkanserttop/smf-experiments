@@ -1,8 +1,9 @@
 /*globals SMF, Pages, keys*/
 (function(){
-	var pageName = 'UIElementsWebViewEx01', keys = App.keys;
-	var page = Pages[pageName] = new SMF.UI.Page({
-		onKeyPress: keys.page.onKeyPress
+	var pageName = 'UIElementsWebViewEx01', defaults = App.defaults;
+	var page = new SMF.UI.Page({
+    name: pageName,
+		onKeyPress: defaults.page.onKeyPress
 	});
 	page.clear();
 
