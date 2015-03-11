@@ -1,0 +1,1 @@
+//label.attributedText = "Smartface <font color='#ff0000'>App</font> <b>Studio</b><sup>up</sup>";

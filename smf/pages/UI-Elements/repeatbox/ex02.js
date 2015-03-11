@@ -14,6 +14,7 @@
 	function updateRepeatBoxWithNewItems(repeatBox, items){
 		repeatBox.dataSource = items;
 		repeatBox.refresh();
+		setTimeout(function(){ rBox.closePullItems() } , 50);
 	}
 
 	var pageName = 'UIElementsRepeatBoxEx02', defaults = App.defaults;
@@ -109,8 +110,8 @@
 	rBox.itemTemplate.add(lbl2);
 
 	page.add(rBox);
-	App.helpers.txt_btn_back(page, {top: '90%', left: '10%'});
 	page.show();
+	App.defaults.header(page, pageName);
 	//alert(page.controls[0].name);
 	//alert(Object.keys(page.controls[0].controls[0]));
 	//alert(page.controls[0].controls[0].name);

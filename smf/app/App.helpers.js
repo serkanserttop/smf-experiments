@@ -1,23 +1,85 @@
 App.helpers = (function(){
 	var globals = App.globals, defaults = App.defaults;
 	function createPageLinks(pageName, links, targetName, dontShow){
-		if(!Pages[pageName]){
+		if(typeof Pages[pageName] === 'undefined'){
 			Pages[pageName] = new SMF.UI.Page({
 				onKeyPress: defaults.page.onKeyPress
 			});
 		}
 		var page = Pages[pageName];
-		if(!targetName){
-			targetName = 'ScrollView';
+		page.clear();
+
+		/*if(!targetName){
+			targetName = 'ScrollView12';
+		}*/
+
+		var lbl = new SMF.UI.Label({
+			height : "100%",
+			left: '3%',
+			top: 0,
+			width: '70%',
+			fillColor: 'black',
+			fontColor: 'orange',
+			backgroundTransparent: false,
+			touchEnabled: false
+		});
+
+		var img = new SMF.UI.Image({
+			left: "80%",
+			width: '20%',
+			image: globals.APP_URL + "/images/1426022080_icon-ios7-arrow-forward-128.png",
+			changeAnimation: "fade",
+			touchEnabled: false
+		});
+
+		var rBox = new SMF.UI.RepeatBox({
+			width : "100%",
+			height : "100%",
+			left : 0,
+			top : 0,
+			dataSource : links,
+			showScrollbar : true,
+			enablePullDownToRefresh: true,
+			enablePullUpToRefresh: true,
+			onRowRender: function(e){
+				var label = this.controls[0];
+				label.text = e.rowData[0];
+			},
+			onSelectedItem: function(e){
+				var lambda = links[e.rowIndex][1];
+				if(typeof lambda === 'function'){
+					lambda();
+				}
+				else if(typeof lambda === 'string'){
+					include(lambda);	
+				}
+			}
+		});
+		rBox.itemTemplate.height = "8%";
+		rBox.itemTemplate.fillColor = "yellow";
+		rBox.itemTemplate.add(lbl);
+		rBox.itemTemplate.add(img);
+
+		page.add(rBox);
+		page.show();
+		App.defaults.header(page, pageName);
+	}
+	function createPageScrollLinks(pageName, links, targetName){
+		if(typeof Pages[pageName] === 'undefined'){
+			Pages[pageName] = new SMF.UI.Page({
+				onKeyPress: defaults.page.onKeyPress
+			});
 		}
-		if(page[targetName]){
-			page.remove(page[targetName]);
+		var page = Pages[pageName];
+		page.clear();
+		if(!targetName){
+			targetName = 'ScrollView12';
 		}
 		var target = page[targetName] = new SMF.UI.ScrollView({
-			top: "10%",
-			left: "10%",
-			width: "80%",
-			height: "80%",
+			top: "0%",
+			left: "0%",
+			width: "100%",
+			height: "100%",
 			contentHeight: "100%",
 			contentWidth: "100%"
 		});
@@ -32,13 +94,17 @@ App.helpers = (function(){
 		target.autosize = true;
 		page.onShow = function(){
 			App.defaults.header(page, pageName);
+			var tc = target.controls, len = tc.length;
+			var last_control = tc[len - 1];
+			target.contentHeight = last_control.top + last_control.height;
 		}
-		//if(dontShow !== true){ page.show(); }
 		page.show();
 	}
 	function createPageUrlLoadTextButton(parent, txt, url){
 		var txtBtn = new SMF.UI.TextButton({
 			text: txt,
+			width: '97%',
+			height: '50dp',
 			onPressed: function(){
 				if(typeof url === 'function'){
 					url();

@@ -9,7 +9,11 @@
 		['Slider', root + 'slider/index.js'],
 		['Slider Drawer', root + 'slider-drawer/index.js'],
 		['Text Button', root + 'text-button/index.js'],
-		['Web View', root + 'webView/index.js']
+		['Events', root + 'events/index.js'],
+		['Scroll View Extender', root + 'webView/index.js'],
+		['Scroll View Extender', root + 'webView/index.js'],
+		['Scroll View Extender', root + 'webView/index.js'],
+		['Scroll View Extender', root + 'webView/index.js']
 	];
 	App.helpers.createPageLinks('UIElementsIdx', links);
 })();

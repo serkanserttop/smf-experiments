@@ -23,12 +23,12 @@ App.defaults.header = function(page, titleHeader, rightItems) {
 
 	_.each(defs.iOS.NavigationBar, function(val, key){ navBar[key] = val; });
 
-	navItem.titleView = _.extend(defs.iOS.navigationItem.titleView, {
+	navItem.titleView = _.extend({}, defs.iOS.navigationItem.titleView, {
 		text: titleHeader,
 		textColor: 'wheat'
 	});
 
-	var backItem = new iOS.BarButtonItem(_.extend(defs.iOS.BarButton.back, {
+	var backItem = new iOS.BarButtonItem(_.extend({}, defs.iOS.BarButton.back, {
 		tintColor: 'pink'
 	}));
 	
@@ -36,6 +36,8 @@ App.defaults.header = function(page, titleHeader, rightItems) {
 	navItem.leftBarButtonItems = leftItems;
 	
 	if(rightItems && rightItems.length > 0){
-		navItem.leftBarButtonItems = leftItems;
+		navItem.rightBarButtonItems = _.map(rightItems, function(item){
+			return (new iOS.BarButtonItem(item));
+		});;
 	}
 };

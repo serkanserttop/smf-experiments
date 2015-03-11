@@ -1,6 +1,6 @@
 /* globals load, include, App.helpers, Pages, SMF, globals, keys*/
 (function(){
-  var toggleImages;
+  //var toggleImages;
   var HOME_URL = App.globals.APP_URL;
   var pageName = 'UIElementsImageButtonEvents';
   var page = new SMF.UI.Page({
@@ -9,13 +9,11 @@
   });
   page.clear();
 
-  var label;
-  txt_btn_clear();
-  txt_btn_togle_hide();
-  label_event();
+  var label = label_event();
+  page.add(label);
   
-  var img_btn1 = img_btn_addtocart();
-  page.add(img_btn1);
+  var img_btn = img_btn_addtocart();
+  page.add(img_btn);
   
   function appendText(obj, txt){
     var old = obj.text;
@@ -23,9 +21,9 @@
   }
   
   function img_btn_addtocart(){
-    var img_btn = new SMF.UI.ImageButton({
+    var btn = new SMF.UI.ImageButton({
       left : '10%',
-      top : '10%',
+      top : '5%',
       touchEnabled : true,
       imageFillType : SMF.UI.ImageFillType.autosize,
       defaultImage : App.globals.APP_URL + 'images/addtocart-button01.png',
@@ -43,56 +41,51 @@
       onTouchEnabled: function(e) { appendText(label, 'onTouchEnabled'); },
       onTouchEnded: function(e) { appendText(label, 'onTouchEnded'); }
     });
-    return img_btn;
-  }
-  
-  function txt_btn_togle_hide(){
-    page.textButton1 = new SMF.UI.TextButton({
-      top: "20%",
-      left: "10%",
-      text: "Hide",
-      onPressed: function(){
-        var visible = img_btn1.visible;
-        var txt = (visible) ? 'Show' : 'Hide';
-        img_btn1.visible = !visible;
-        this.text = txt;
-      }
-    });
-    page.add(page.textButton1);
+    return btn;
   }
     
-  function txt_btn_clear(){
-    var btn = new SMF.UI.TextButton({
-      top: "30%",
-      left: "10%",
-      text: "Clear",
-      fillColor: "red",
-      fontColor: "white",
-      onPressed: function(e) {
-        label.text = '';
-      }
-    });
-    page.add(btn);
-  }
-  
   function label_event(){
-    label = new SMF.UI.Label({
+    var label = new SMF.UI.Label({
       text: '',
+      width: '80%',
+      height: '70%',
       multipleLine: true,
       showScrollBar: true,
-      autoSize: true,
-      top: '50%',
+      //alignment: SMF.UI.Alignment.top,
+      alignment: 'top',
+      //autoSize: true,
+      top: '20%',
       left: '10%'
     });
-    page.add(label);
+    return label;
   }
   
   
   page.show();
-  App.defaults.header(page, pageName);
-  page.actionBar.displayShowHomeEnabled = true;
-  page.actionBar.title = 'test';
-  page.actionBar.onHomeIconItemSelected = function(){ Pages.back(); };
+  
+  var rightBarButtomHide = {
+    title: 'Hide',
+    onSelected: function(e){
+      var visible = img_btn.visible;
+      var txt = (visible) ? 'Show' : 'Hide';
+      img_btn.visible = !visible;
+      //page.navigationItem.rightBarButtonItems[0].title = txt;
+      this.title = txt;
+    }
+  };
+
+  var rightBarButtomClear = {
+    title: 'Clear',
+    onSelected: function(e){
+      label.text = '';
+    }
+  };
+
+  App.defaults.header(page, pageName, [rightBarButtomHide, rightBarButtomClear]);
+  
+  //page.actionBar.displayShowHomeEnabled = true;
+  //page.actionBar.title = 'test';
+  //page.actionBar.onHomeIconItemSelected = function(){ Pages.back(); };
 
 })()
 

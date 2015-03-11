@@ -45,6 +45,6 @@
     page.add(btn);
   }
   
-  App.defaults.header(page, pageName);
   page.show();
+  App.defaults.header(page, pageName);
 })();

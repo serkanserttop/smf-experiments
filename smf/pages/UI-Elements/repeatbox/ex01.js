@@ -48,6 +48,6 @@
 	rBox.itemTemplate.add(lbl);
 
 	page.add(rBox);
-	App.helpers.txt_btn_back(page, {top: '90%', left: '10%'});
 	page.show();
+	App.defaults.header(page, pageName);
 })();

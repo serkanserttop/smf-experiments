@@ -15,7 +15,7 @@
 			type: SMF.UI.TitleViewType.text,
 			alignment: SMF.UI.TextAlignment.center
 		};
-		navItem.titleView = _.extend(titleViewDefaults, {
+		navItem.titleView = _.extend({}, titleViewDefaults, {
 			text: titleHeader,
 			textColor: 'wheat'
 		});
@@ -24,7 +24,7 @@
 			title: 'BACK',
 			onSelected : Pages.back
 		};
-		var backItem = new iOS.BarButtonItem(_.extend(backButtonDefaults, {
+		var backItem = new iOS.BarButtonItem(_.extend({}, backButtonDefaults, {
 			tintColor: 'pink'
 		}));
 		
@@ -32,7 +32,9 @@
 		navItem.leftBarButtonItems = leftItems;
 		
 		if(rightItems && rightItems.length > 0){
-			navItem.leftBarButtonItems = leftItems;
+			navItem.rightBarButtonItems = _.map(rightItems, function(item){
+				return (new iOS.BarButtonItem(item));
+			});;
 		}
 	}
 
@@ -52,7 +54,7 @@
 			type: SMF.UI.TitleViewType.text,
 			alignment: SMF.UI.Alignment.center
 		};
-		var titleView = _.extend(titleViewDefaults, {
+		var titleView = _.extend({}, titleViewDefaults, {
 			text: titleHeader,
 			width: '50%',
 			textSize: 18,
@@ -61,22 +63,18 @@
 			top: 10
 		});
 
-		var menuItemBackDefaults = {
-			id: "itemBack",
-			title: 'BACK',
+		var menuItemHello = new SMF.UI.Android.MenuItem({
+			id: "helloWorld",
+			title: 'Hello',
 			showAsAction: SMF.UI.Android.ShowAsAction.always,
-			onSelected: Pages.back
-		};
-		var itemBack = new SMF.UI.Android.MenuItem(menuItemBackDefaults);
+			onSelected: function(){
+				alert('Hello MenuItem');
+			}
+		});
 
-		var menuItemDefaults = {
-			showAsAction: SMF.UI.Android.ShowAsAction.ifRoom
-		};
-		var actionbarItems = [itemBack];
-
-		_.each(_.extend(navBarDefaults, {
+		_.each(_.extend({}, navBarDefaults, {
 			titleView: titleView,
-			menuItems: actionbarItems
+			menuItems: [menuItemHello]
 		}), function(val, key){ bar[key] = val; });
 	}
 
@@ -90,11 +88,23 @@
 	page.show();
 
 	var titleHeader = 'Action / Nav Bar Example 1';
+
 	if(Device.deviceOS === 'Android'){
-		actionBar(page, titleHeader);
+		actionBar(page, titleHeader, {
+	    title: 'Android Specific',
+	    showAsAction: SMF.UI.Android.ShowAsAction.ifRoom,
+	    onSelected: function(e){
+	      alert('Android does not need a BACK button');
+	    }
+	  });
 	}
 	else{
-		navigation(page, titleHeader);
+		navigation(page, titleHeader, {
+			title: 'Android Specific',
+	    onSelected: function(e){
+	      alert('iOS needs a BACK button');
+	    }
+		});
 	}
 
 })();
