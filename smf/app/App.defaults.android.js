@@ -36,10 +36,13 @@ App.defaults.header = function actionBar(page, titleHeader, rightItems) {
 		top: 10
 	});
 	
-	var actionbarItems = [];
+	var menuBack = new SMF.UI.Android.MenuItem(_.extend({}, bar_defs.menuItemBack));
+	var actionbarItems = [menuBack];
+	
 	if(rightItems && rightItems.length > 0){
-		actionbarItems = _.map(rightItems, function(item){
-			return (new SMF.UI.Android.MenuItem(_.extend({}, bar_defs.menuItemDefaults, item)));
+		actionbarItems = _.each(rightItems, function(item){
+			var rightItem = new SMF.UI.Android.MenuItem(_.extend({}, bar_defs.menuItemDefaults, item));
+			actionbarItems.push(rightItem);
 		});
 	}
 

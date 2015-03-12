@@ -1,6 +1,27 @@
 App.helpers = (function(){
 	var globals = App.globals, defaults = App.defaults;
-	function createPageLinks(pageName, links, targetName, dontShow){
+	function includeIfStringElseExecute(item){
+		if(item instanceof Array){
+			for(var i = 0; i < item.length; i++){
+				includeIfStringElseExecute(item[i]);
+			}
+		}
+		else if(typeof item === 'function'){
+			var items = item();
+			if(items){
+				includeIfStringElseExecute(items);
+			}
+		}
+		else if(typeof item === 'string'){
+			try{
+				include(item);
+			}
+			catch(e){
+				alert('failed to include ' + item.toString());
+			}
+		}
+	}
+	function createPageLinks(pageName, links){
 		if(typeof Pages[pageName] === 'undefined'){
 			Pages[pageName] = new SMF.UI.Page({
 				onKeyPress: defaults.page.onKeyPress
@@ -8,10 +29,6 @@ App.helpers = (function(){
 		}
 		var page = Pages[pageName];
 		page.clear();
-
-		/*if(!targetName){
-			targetName = 'ScrollView12';
-		}*/
 
 		var lbl = new SMF.UI.Label({
 			height : "100%",
@@ -27,7 +44,7 @@ App.helpers = (function(){
 		var img = new SMF.UI.Image({
 			left: "80%",
 			width: '20%',
-			image: globals.APP_URL + "/images/1426022080_icon-ios7-arrow-forward-128.png",
+			image: globals.APP_URL + "images/1426022080_icon-ios7-arrow-forward-128.png",
 			changeAnimation: "fade",
 			touchEnabled: false
 		});
@@ -46,13 +63,52 @@ App.helpers = (function(){
 				label.text = e.rowData[0];
 			},
 			onSelectedItem: function(e){
-				var lambda = links[e.rowIndex][1];
-				if(typeof lambda === 'function'){
-					lambda();
-				}
-				else if(typeof lambda === 'string'){
-					include(lambda);	
-				}
+				/*function includeIfStringElseExecute(item){
+					if(item instanceof Array){
+						for(var i = 0; i < item.length; i++){
+							includeIfStringElseExecute(item[i]);
+						}
+					}
+					else if(typeof item === 'function'){
+						var items = item();
+						if(items){
+							includeIfStringElseExecute(items);
+						}
+					}
+					else if(typeof item === 'string'){
+						include(item);
+					}
+				}*/
+
+				var lambdas = links[e.rowIndex].slice(1);
+				includeIfStringElseExecute(lambdas);
+				/*for(var i = 0; i < lambdas.length; i++){
+					var item = lambdas[i];
+					if(item instanceof Array){
+						for(var j = 0; j < item.length; i++){
+							includeIfStringElseExecute(item[i]);
+						}
+					}
+					else if(typeof item === 'function'){
+						var items = item();
+						if(items){
+							includeIfStringElseExecute(items);
+						}
+					}
+					else if(typeof item === 'string'){
+						include(item);
+					}
+				}*/
+				/*
+				for(var i = 0; i < lambdas.length; i++){
+					var lambda = lambdas[i];
+					if(typeof lambda === 'function'){
+						lambda();
+					}
+					else if(typeof lambda === 'string'){
+						include(lambda);	
+					}
+				}*/
 			}
 		});
 		rBox.itemTemplate.height = "8%";
@@ -207,23 +263,25 @@ App.helpers = (function(){
 		return btn;
 	}
 	function updateScripts(){
-		var apps_url = globals.APP_URL + 'app/';
-		var host = globals.HOST_URL;
-		include(apps_url + 'App.globals.js');
-		include(apps_url + 'App.defaults.js');
+		var app_url_cached = globals.APP_URL;
+		var apps_url = app_url_cached + 'app/';
+		alert('updateScripts');
+		include(app_url_cached + 'libs/router.js');
+		//App.router = new Router();
+
+		App.router.include(apps_url + 'App.globals.js');
+		App.router.include(apps_url + 'App.defaults.js');
 		if(Device.deviceOS === 'Android'){
-			include(apps_url + 'App.defaults.android.js');
+			App.router.include(apps_url + 'App.defaults.android.js');
 		}
-		else{ 
-			include(apps_url + 'App.defaults.iOS.js');
+		else{
+			App.router.include(apps_url + 'App.defaults.iOS.js');
 		}
-		include(apps_url + 'App.helpers.js');
-		include(apps_url + 'App.helpers.generic.js');
-		include(apps_url + 'App.helpers.generic.eventLogGenerator.js');
-		//need to make sure full path is given, otherwise a bug is created as globals !== App.globals at this stage
-		App.globals.HOST_URL = host;
-		App.globals.APP_URL = host + '/';
-		refreshMainLinks();
+		App.router.include(apps_url + 'App.helpers.js');
+		App.router.include(apps_url + 'App.helpers.generic.js');
+		App.router.include(apps_url + 'App.helpers.generic.eventLogGenerator.js');
+		App.globals.APP_URL = app_url_cached;
+		App.helpers.refreshMainLinks();
 	}
 	return {
 		generic: {},

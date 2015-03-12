@@ -13,12 +13,12 @@ App.globals = {
 		},
 		c9:{
 			current: 'smf-experiments-serkanserttop-smf-2.c9.io',
-			smf_experiments: 'smf-experiments-serkanserttop-smf-2.c9.io'
+			smf_experiments: 'http://smf-experiments-serkanserttop-smf-2.c9.io'
 		}
 	},
 	environment: {
 		location: 'local', //cdn, bundle -- bundled with the app
-		state : 'dev' //production, test
+		state : 'development' //production, test
 	}
 };
 
@@ -29,20 +29,30 @@ App.globals.environment.setServer = function(target, port){
 		port = ':' + port;
 	}
 	switch(target){
+		case "app":
+		server = '';
+			break;
 		case "home":
 			server = my_hosts.local.device.home;
 			break;
 		case "work":
 			server = my_hosts.local.device.work;
 			break;
-		case "android":
-			server = my_hosts.local.emulator.android;
+		case "emulator":
+			if(Device.deviceOS === 'android'){
+				server = my_hosts.local.emulator.android;	
+			}
+			else{
+				server = my_hosts.local.emulator.ios;
+			}
 			break;
 		case "genymotion":
-			server = my_hosts.local.emulator.genymotion;
-			break;
-		case "ios":
-			server = my_hosts.local.emulator.ios;
+			if(Device.deviceOS === 'android'){
+				server = my_hosts.local.emulator.genymotion;	
+			}
+			else{
+				server = my_hosts.local.emulator.ios;
+			}
 			break;
 		case "c9.smf_experiments":
 			server = my_hosts.c9.smf_experiments;
@@ -53,10 +63,20 @@ App.globals.environment.setServer = function(target, port){
 		default:
 			server = target;
 	}
-	globals.HOST_URL = 'http://' + server + port;
-	globals.APP_URL = globals.HOST_URL + '/';
+	if(server !== ''){ globals.APP_URL = 'http://' + server + port + '/'; }
+	else{ globals.APP_URL = ''; }
+};
+
+App.setConfiguration = function(env, url) {
+	alert('App.setConfiguration', App.globals.APP_URL);
+	App.router = new Router({
+		environment: 'development',
+		app_url: App.globals.APP_URL
+	});
 };
 
 if(typeof App.globals.APP_URL === 'undefined'){
-	App.globals.environment.setServer('c9.smf_experiments');	
+	//App.globals.environment.setServer('emulator', 3000);
 }
+App.globals.environment.setServer('emulator', 3000);
+App.setConfiguration();
