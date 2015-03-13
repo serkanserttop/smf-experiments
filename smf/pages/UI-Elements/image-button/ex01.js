@@ -1,16 +1,5 @@
-/*globals SMF, globals, keys, Pages, App.helpers*/
-(function(){
-  var pageName = 'UIElementsImageButtonEx01';
-	var page = new SMF.UI.Page({
-    name: pageName,
-		onKeyPress: App.defaults.page.onKeyPress
-	});
-	page.clear();
-  var img_btn1 = img_btn_addtocart();
-  page.add(img_btn1);
-  
-  txt_btn_toggle_enabled();
-  
+/*globals SMF, App*/
+App.router.define('pages/UI-Elements/image-button/ex01', function(page, pageName){
   function img_btn_addtocart(){
     var img_btn = new SMF.UI.ImageButton({
       left : '10%',
@@ -42,9 +31,16 @@
         this.text = states[state_idx];
       }
     });
-    page.add(btn);
+    return btn;
   }
-  
-  page.show();
-  App.defaults.header(page, pageName);
-})();
+
+  var img_btn1 = img_btn_addtocart();
+  page.add(img_btn1);
+
+  txt_btn = txt_btn_toggle_enabled();
+  page.add(txt_btn);
+
+  page.onShow = function(e){
+    App.defaults.header(page, pageName);
+  }
+});

@@ -1,14 +1,6 @@
 /*globals SMF, Pages, keys*/
-(function(){
-  var pageName = 'UIElementsSearchBarEx01', defaults = App.defaults;
-	var page = new SMF.UI.Page({
-    name: pageName,
-		fillColor:"red",
-		onKeyPress: defaults.page.onKeyPress
-	});
-	page.clear();
-
-	//var search_bar = new SMF.UI.SearchBar({
+App.router.define('pages/UI-Elements/searchbar/ex01', function(page, pageName){
+	page.fillColor = "red";
 	var search_bar = new SMF.UI.SearchBar({
 		placeHolder: "Enter Name",
 		/*onTextChange: function(){
@@ -58,6 +50,6 @@
 	page.add(pageTxtBtnCancel);
 	App.helpers.txt_btn_back(page, {top: '60%', left: '10%'});
 	page.add(search_bar);
-	page.show();
+	//page.show();
 	//search_bar.hide();
-})();
+});

@@ -1,5 +1,5 @@
-/*globals SMF, Pages, keys*/
-(function(){
+/*globals SMF, App*/
+App.router.define('pages/UI-Elements/repeatbox/events', function(page, pageName){
 	function updateRepeatBoxWithNewItems(repeatBox, items){
 		repeatBox.dataSource = items;
 		repeatBox.refresh();
@@ -57,13 +57,7 @@
     return label;
   }
   
-	var pageName = 'UIElementsRepeatBoxEvents', defaults = App.defaults;
-	var page = new SMF.UI.Page({
-    name: pageName,
-		onKeyPress: defaults.page.onKeyPress
-	});
-	page.clear();
-
+	var defaults = App.defaults;
 	var static_array = [
 		{'lang': 'Javascript'},
 		{'lang': 'Ruby'},
@@ -122,12 +116,9 @@
   var btn_clear = create_txt_btn_clear(label_for_events);
   var btn_toggle_hide = create_txt_btn_toggle_hide(rBox);
   
-  page.add(label_for_events);
-  page.add(btn_clear);
-  page.add(btn_toggle_hide);
-
-	page.add(rBox);
-	App.helpers.txt_btn_back(page, {top: '90%', left: '70%', width: '30%'});
-	page.show();
-
-})();
+  _.each([label_for_events, btn_clear, btn_toggle_hide, rBox], function(item){ page.add(item); });
+	
+	page.onShow = function(){
+		App.helpers.txt_btn_back(page, {top: '90%', left: '70%', width: '30%'});	
+	};
+});

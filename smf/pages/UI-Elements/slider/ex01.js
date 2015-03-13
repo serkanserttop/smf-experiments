@@ -1,12 +1,9 @@
-
-(function (){;
-	var pageName = 'UIElementsSliderEx01';
-	var page = new SMF.UI.Page({
-    name: pageName,
-		onKeyPress: App.defaults.page.onKeyPress
-	});
-	page.clear();
-
+/*globals SMF, App*/
+alert('running pages/UI-Elements/slider/index, ' + App.globals.APP_URL);
+App.router.define('pages/UI-Elements/slider/index', function(page, pageName){
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min)) + min;
+	}
 	var container = new SMF.UI.Container({
 		top: '10%',
 		left: '10%',
@@ -15,33 +12,28 @@
 		contentHeight: '100%',
 		contentWidth: '100%'
 	});
-	page.add(container);
 
 	var slider = new SMF.UI.Slider({
-	    top: "10%",
-	    left: "10%",
-	    valueRangeMin: 0,
-	    valueRangeMax: 100,
-	    value: 50, //gives initial value
-	    stepSize: 5,
-	    showThumbnail: false,
-	    //position: SMF.UI.SliderDrawerPosition.left, // iOS only
-	    onShow: function(){
-	    	alert('SMF.UI.Slider.onShow is called');
-	    }
+		top: "10%",
+		left: "10%",
+		valueRangeMin: 0,
+		valueRangeMax: 100,
+		value: 50, //gives initial value
+		stepSize: 5,
+		showThumbnail: false
+		//,position: SMF.UI.SliderDrawerPosition.left, // iOS only
+		/*,onShow: function(){
+			alert('SMF.UI.Slider.onShow is called');
+		}*/
 	});
-	function getRandomInt(min, max) {
-		return Math.floor(Math.random() * (max - min)) + min;
-	}
-	container.add(slider);
 	
 	var txt_btn = new SMF.UI.TextButton({
-	    top: "30%",
-	    left: "10%",
-	    text: "Randomly Change Value",
-	    backgroundColor: 'red',
-	    onPressed: function(e) {
-	        slider.animate({
+    top: "30%",
+    left: "10%",
+    text: "Randomly Change Value",
+    backgroundColor: 'red',
+    onPressed: function(e) {
+      slider.animate({
 				property : 'width', //only width or alpha
 				endValue : getRandomInt(20, 80) + '%',
 				motionEase : SMF.UI.MotionEase.plain,
@@ -50,9 +42,14 @@
 					//do your action after finishing the animation
 				}
 			});
-	    }
+		}
 	});
+
+	page.add(container);
+	container.add(slider);
 	page.add(txt_btn);
-	App.helpers.txt_btn_back(page, {top: '60%', left: '10%'});
-	page.show();
-})();
+	page.onShow = function(){
+		alert('showing pages/UI-Elements/slider/index');
+		App.defaults.header(page, 'Slider Example 1');
+	};
+});

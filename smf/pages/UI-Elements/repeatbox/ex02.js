@@ -1,5 +1,5 @@
 /*globals SMF, Pages, keys*/
-(function(){
+App.router.define('pages/UI-Elements/repeatbox/ex02', function(page, pageName){
 	var lastRandomNumberIndex = 0;
 
 	function createRandomNumbers(n){
@@ -17,13 +17,7 @@
 		setTimeout(function(){ rBox.closePullItems() } , 50);
 	}
 
-	var pageName = 'UIElementsRepeatBoxEx02', defaults = App.defaults;
-	var page = new SMF.UI.Page({
-    name: pageName,
-		fillColor: 'violet',
-		onKeyPress: defaults.page.onKeyPress
-	});
-	page.clear();
+	//page.fillColor = 'violet';
 
 	var static_array = [
 		{'lang': 'Javascript'},
@@ -55,7 +49,7 @@
 	});
 
 	//var pushed = false;
-	var controls = [];
+	//var controls = [];
 
 	var rBox = new SMF.UI.RepeatBox({
 		width : "80%",
@@ -110,11 +104,12 @@
 	rBox.itemTemplate.add(lbl2);
 
 	page.add(rBox);
-	page.show();
-	App.defaults.header(page, pageName);
+	page.onShow = function(){
+		App.defaults.header(page, pageName);
+	};
 	//alert(page.controls[0].name);
 	//alert(Object.keys(page.controls[0].controls[0]));
 	//alert(page.controls[0].controls[0].name);
 	//alert(page.controls[1].name);
 	//alert(Object.keys(page.controls[1]));
-})();
+});

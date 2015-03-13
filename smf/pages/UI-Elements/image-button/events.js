@@ -1,20 +1,5 @@
-/* globals load, include, App.helpers, Pages, SMF, globals, keys*/
-(function(){
-  //var toggleImages;
-  var HOME_URL = App.globals.APP_URL;
-  var pageName = 'UIElementsImageButtonEvents';
-  var page = new SMF.UI.Page({
-    name: pageName,
-    onKeyPress: App.defaults.page.onKeyPress
-  });
-  page.clear();
-
-  var label = label_event();
-  page.add(label);
-  
-  var img_btn = img_btn_addtocart();
-  page.add(img_btn);
-  
+/* globals App, SMF*/
+App.router.define('pages/UI-Elements/image-button/events', function(page, pageName){
   function appendText(obj, txt){
     var old = obj.text;
     obj.text = old + '\n' + txt;
@@ -59,33 +44,35 @@
     });
     return label;
   }
+
+  var HOME_URL = App.globals.APP_URL;
+  var label = label_event();
+  page.add(label);
   
+  var img_btn = img_btn_addtocart();
+  page.add(img_btn);
   
-  page.show();
-  
-  var rightBarButtomHide = {
-    title: 'Hide',
-    onSelected: function(e){
-      var visible = img_btn.visible;
-      var txt = (visible) ? 'Show' : 'Hide';
-      img_btn.visible = !visible;
-      //page.navigationItem.rightBarButtonItems[0].title = txt;
-      this.title = txt;
-    }
+  page.onShow = function(){
+    var rightBarButtomHide = {
+      title: 'Hide',
+      onSelected: function(e){
+        var visible = img_btn.visible;
+        var txt = (visible) ? 'Show' : 'Hide';
+        img_btn.visible = !visible;
+        //page.navigationItem.rightBarButtonItems[0].title = txt;
+        this.title = txt;
+      }
+    };
+
+    var rightBarButtomClear = {
+      title: 'Clear',
+      onSelected: function(e){
+        label.text = '';
+      }
+    };
+    App.defaults.header(page, pageName, [rightBarButtomHide, rightBarButtomClear]);
+    //page.actionBar.displayShowHomeEnabled = true;
+    //page.actionBar.title = 'test';
+    //page.actionBar.onHomeIconItemSelected = function(){ Pages.back(); };
   };
-
-  var rightBarButtomClear = {
-    title: 'Clear',
-    onSelected: function(e){
-      label.text = '';
-    }
-  };
-
-  App.defaults.header(page, pageName, [rightBarButtomHide, rightBarButtomClear]);
-  
-  //page.actionBar.displayShowHomeEnabled = true;
-  //page.actionBar.title = 'test';
-  //page.actionBar.onHomeIconItemSelected = function(){ Pages.back(); };
-
-})()
-
+});

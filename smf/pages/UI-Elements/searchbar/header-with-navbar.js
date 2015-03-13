@@ -1,13 +1,5 @@
 /*globals SMF, Pages, keys*/
-(function(){
-  var pageName = 'UIElementsSearchBarHeader', defaults = App.defaults;
-	var page = new SMF.UI.Page({
-    name: pageName,
-		fillColor:"red",
-		onKeyPress: defaults.page.onKeyPress
-	});
-	page.clear();
-
+App.router.define('pages/UI-Elements/searchbar/header-with-navbar', function(page, pageName){
 	var static_array = [
 		{'lang': 'Javascript'},
 		{'lang': 'Ruby'},
@@ -25,6 +17,7 @@
 		fontColor: 'orange',
 		backgroundTransparent: false
 	});
+
 	var rBox = new SMF.UI.RepeatBox({
 		width : "80%",
 		height : "90%",
@@ -34,20 +27,22 @@
 		showScrollbar : true,
 		onRowRender: function onRowRender(e){
 			this.controls[0].text = e.rowData.lang;
+		},
+		itemTemplate: {
+			height: "10%"
 		}
 	});
 
-	rBox.itemTemplate.height = "10%";
 	rBox.itemTemplate.add(label_for_repeatbox);
 
-	var headerDeviceSpecific;
+	var searchBarDeviceSpecific;
 	if(Device.deviceOS === "Android"){
-		headerDeviceSpecific = {
+		searchBarDeviceSpecific = {
 			//,icon: 'find appropriate icon'
 		};
 	}
 	else{
-		headerDeviceSpecific = {
+		searchBarDeviceSpecific = {
 			barStyle: SMF.UI.SearchBarStyle.blackOpaque,
 			setShowsCancel: true,
 			stickToNavigationBar: true,
@@ -58,24 +53,21 @@
 	var search_bar = new SMF.UI.SearchBar(_.extend({
 		placeHolder: "Enter Name",
 		top: "0",
-		left: "10%",
+		left: "50%",
 		height: '10%',
-		width: "100%"
-		,text: "" //iOS fix for unwanted quotes
-		,onTextChange: function(e){
+		width: "100%",
+		text: "", //iOS fix for unwanted quotes
+		onTextChange: function(e){
 			var search_key = this.text.toLowerCase(), results;
 			results = _.filter(static_array, function(obj){ return obj.lang.toLowerCase().indexOf(search_key) !== -1; });	
 			rBox.dataSource = results;
 			rBox.refresh();
 		}
-	}, headerDeviceSpecific));
+	}, searchBarDeviceSpecific));
 
 	page.add(rBox);
-	App.helpers.txt_btn_back(page, {top: '90%', left: '60%', width: '30%'});
-
 	page.add(search_bar);
-	page.show();
-
-	App.defaults.header(page, pageName);
-
-})();
+	page.onShow = function(e){
+		App.defaults.header(page, pageName);
+	};
+});

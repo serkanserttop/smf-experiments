@@ -1,12 +1,6 @@
 /*globals SMF, Pages, keys*/
-(function(){
-	var pageName = 'UIElementsRepeatBoxEx01', defaults = App.defaults;
-	var page = new SMF.UI.Page({
-    name: pageName,
-		fillColor: 'yellow',
-		onKeyPress: defaults.page.onKeyPress
-	});
-	page.clear();
+App.router.define('pages/UI-Elements/repeatbox/ex01', function(page, pageName){
+	//page.fillColor = 'violet';
 
 	var static_array = [
 		{'lang': 'Javascript'},
@@ -48,6 +42,7 @@
 	rBox.itemTemplate.add(lbl);
 
 	page.add(rBox);
-	page.show();
-	App.defaults.header(page, pageName);
-})();
+	page.onShow = function(){
+		App.defaults.header(page, pageName);
+	};
+});

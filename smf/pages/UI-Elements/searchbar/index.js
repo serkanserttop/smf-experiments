@@ -1,10 +1,10 @@
-/* globals load, include, App.helpers, Pages, SMF, globals, keys*/
-(function(){
-	var root = App.globals.APP_URL + 'pages/UI-Elements/searchbar/', links = [
-		['Example 1', root + 'ex01.js'],
-		['Events', root + 'events.js'],
-		['Header', root + 'header.js'],
-		['Header At NavBar', root + 'header-with-navbar.js']
+/* globals App, SMF*/
+App.router.define('pages/UI-Elements/searchbar/index', function(page, pageName){
+	var root = 'pages/UI-Elements/searchbar/', navgen = App.router.navigateGenerator, links = [
+		['Example 1', navgen(root + 'ex01')],
+		['Events', navgen(root + 'events')],
+		['Header', navgen(root + 'header')],
+		['Header At NavBar', navgen(root + 'header-with-navbar')]
 	];
-	App.helpers.createPageLinks('UIElementsSearchbarIdx', links);
-})();
+	App.helpers.createPageLinksWithDefine(page, pageName, links);
+});

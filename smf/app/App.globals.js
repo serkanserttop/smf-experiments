@@ -30,16 +30,13 @@ App.globals.environment.setServer = function(target, port){
 	}
 	switch(target){
 		case "app":
-		server = '';
-			break;
+			server = ''; break;
 		case "home":
-			server = my_hosts.local.device.home;
-			break;
+			server = my_hosts.local.device.home; break;
 		case "work":
-			server = my_hosts.local.device.work;
-			break;
+			server = my_hosts.local.device.work; break;
 		case "emulator":
-			if(Device.deviceOS === 'android'){
+			if(Device.deviceOS === 'Android'){
 				server = my_hosts.local.emulator.android;	
 			}
 			else{
@@ -47,7 +44,7 @@ App.globals.environment.setServer = function(target, port){
 			}
 			break;
 		case "genymotion":
-			if(Device.deviceOS === 'android'){
+			if(Device.deviceOS === 'Android'){
 				server = my_hosts.local.emulator.genymotion;	
 			}
 			else{
@@ -55,20 +52,17 @@ App.globals.environment.setServer = function(target, port){
 			}
 			break;
 		case "c9.smf_experiments":
-			server = my_hosts.c9.smf_experiments;
-			break;
+			server = my_hosts.c9.smf_experiments; break;
 		case "c9.current":
-			server = my_hosts.c9.current;
-			break;
+			server = my_hosts.c9.current; break;
 		default:
 			server = target;
 	}
-	if(server !== ''){ globals.APP_URL = 'http://' + server + port + '/'; }
-	else{ globals.APP_URL = ''; }
+	if(server !== ''){ App.globals.APP_URL = 'http://' + server + port + '/'; }
+	else{ App.globals.APP_URL = ''; }
 };
 
 App.setConfiguration = function(env, url) {
-	alert('App.setConfiguration', App.globals.APP_URL);
 	App.router = new Router({
 		environment: 'development',
 		app_url: App.globals.APP_URL
@@ -76,7 +70,7 @@ App.setConfiguration = function(env, url) {
 };
 
 if(typeof App.globals.APP_URL === 'undefined'){
-	//App.globals.environment.setServer('emulator', 3000);
+	App.globals.environment.setServer('emulator', 3000);
 }
-App.globals.environment.setServer('emulator', 3000);
+//App.globals.environment.setServer('emulator', 3000);
 App.setConfiguration();

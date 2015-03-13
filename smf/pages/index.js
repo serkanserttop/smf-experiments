@@ -1,7 +1,10 @@
 /*globals globals, App.helpers*/
 (function(){
-	var globals = App.globals, pages_url = globals.APP_URL + 'pages/', libs_url = globals.APP_URL + 'libs/', links = [
-		['UI Elements', pages_url + 'UI-Elements/index.js'],
+	var globals = App.globals, root = 'pages/', pages_url = globals.APP_URL + root, libs_url = globals.APP_URL + 'libs/', links = [
+		//['UI Elements', pages_url + 'UI-Elements/index.js'],
+		['UI Elements', function(){ 
+			App.router.navigate(root + 'UI-Elements/index');
+		}],
 		['Tests', pages_url + 'Tests/index.js'],
 		['Es6 Test', globals.APP_URL + 'experiment/es6/es6.js'],
 		['Update Scripts', function(){
@@ -25,6 +28,7 @@
 			App.helpers.refreshMainLinks();
 		}],
 		['Check App.globals.APP_URL', function(){ alert(App.globals.APP_URL); }],
+		['Check DeviceOS', function(){ alert(Device.deviceOS); }],
 		['Exit', App.globals.APP_URL + 'exit.js']
 	];
 	App.helpers.createPageLinksAndShow('PagesIdx', links);

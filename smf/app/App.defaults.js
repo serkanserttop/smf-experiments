@@ -4,6 +4,7 @@ App.defaults = {
 		showStatusBar : false,
 		touchEnabled : true,
 		onKeyPress : function (e) {
+			if(device.DeviceOS !== 'Android'){ return; }
 			if (e.keyCode === 4) {
 				if (this.name === "Page1") {
 					Application.exit();

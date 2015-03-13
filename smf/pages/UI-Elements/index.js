@@ -1,19 +1,15 @@
-/*globals globals, App.helpers*/
-(function(){
-	var root = App.globals.APP_URL + 'pages/UI-Elements/', links = [
-		['Hello World', root + 'hello-world/index.js'],
-		['Action Bar', root + 'action-bar/index.js'],
-		['Image Button', root + 'image-button/index.js'],
-		['RepeatBox', root + 'repeatbox/index.js'],
-		['Search Bar', root + 'searchbar/index.js'],
-		['Slider', root + 'slider/index.js'],
-		['Slider Drawer', root + 'slider-drawer/index.js'],
-		['Text Button', root + 'text-button/index.js'],
-		['Events', root + 'events/index.js'],
-		['Scroll View Extender', root + 'webView/index.js'],
-		['Scroll View Extender', root + 'webView/index.js'],
-		['Scroll View Extender', root + 'webView/index.js'],
-		['Scroll View Extender', root + 'webView/index.js']
+/*globals SMF, App*/
+App.router.define('pages/UI-Elements/index', function(page, pageName){
+	var root = 'pages/UI-Elements/', navgen = App.router.navigateGenerator, links = [
+		['Hello World', navgen(root + 'hello-world/index')],
+		['Action Bar', navgen(root + 'action-bar/index')],
+		['Image Button', navgen(root + 'image-button/index')],
+		['RepeatBox', navgen(root + 'repeatbox/index')],
+		['Search Bar', navgen(root + 'searchbar/index')],
+		['Slider', navgen(root + 'slider/index')],
+		['Slider Drawer', navgen(root + 'slider-drawer/index')],
+		['Text Button', navgen(root + 'text-button/index')],
+		['Events', navgen(root + 'events/index')]
 	];
-	App.helpers.createPageLinks('UIElementsIdx', links);
-})();
+	App.helpers.createPageLinksWithDefine(page, pageName, links);
+});

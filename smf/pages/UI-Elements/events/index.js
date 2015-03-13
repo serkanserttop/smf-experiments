@@ -1,6 +1,6 @@
-(function(){
-	var root = App.globals.APP_URL + 'pages/UI-Elements/events/', links = [
-		['setTimeout', root + 'setTimeout.js']
+App.router.define('pages/UI-Elements/events/index', function(page, pageName){
+	var root = 'pages/UI-Elements/events/', navgen = App.router.navigateGenerator, links = [
+		['setTimeout', navgen(root + 'setTimeout')]
 	];
-	App.helpers.createPageLinks('UIElementsEventsIdx', links);
-})();
+	App.helpers.createPageLinksWithDefine(page, pageName, links);
+});

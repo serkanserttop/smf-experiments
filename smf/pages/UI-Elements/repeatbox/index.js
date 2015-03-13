@@ -1,9 +1,9 @@
-(function(){
-	var root = App.globals.APP_URL + 'pages/UI-Elements/repeatbox/', links = [
-		['Example 1', root + 'ex01.js'],
-		['Example 2', root + 'ex02.js'],
-		['Events ', root + 'events.js'],
-		['Row', root + 'row.js']
+App.router.define('pages/UI-Elements/repeatbox/index', function(page, pageName){
+	var root = 'pages/UI-Elements/repeatbox/', navgen = App.router.navigateGenerator, links = [
+		['Example 1', navgen(root + 'ex01')],
+		['Example 2', navgen(root + 'ex02')],
+		['Events', navgen(root + 'events')]
+		//,['Row', navgen(root + 'row')]
 	];
-	App.helpers.createPageLinks('UIElementsRepeatboxIdx', links);
-})();
+	App.helpers.createPageLinksWithDefine(page, pageName, links);
+});

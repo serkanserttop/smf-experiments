@@ -36,12 +36,11 @@
 		left: "10%",
 		height: '10%',
 		width: "100%"
-		,text: "asd" //iOS fix for unwanted quotes
+		,text: "" //iOS fix for unwanted quotes
 	}, headerDeviceSpecific, events));
 
 	page.add(search_bar);
-	page.show();
-
-	App.defaults.header(page, pageName);
-
-})();
+	page.onShow = function(e){
+		App.defaults.header(page, 'SearchBar Events');
+	};
+});

@@ -1,5 +1,4 @@
-(function(){
-	var page = new SMF.UI.Page({name: "HelloWorld"});
+App.router.define('pages/UI-Elements/hello-world/textbutton', function(page, pageName){
 	var btn = new SMF.UI.TextButton({
 		text: "Hello World",
 		onPressed: function(e){
@@ -7,6 +6,7 @@
 		}
 	});
 	page.add(btn);
-	page.show();
-	App.defaults.header(page, 'Hello World - TextButton');
-})();
+	page.onShow = function(){
+		App.defaults.header(page, 'Hello World - TextButton');
+	};
+});

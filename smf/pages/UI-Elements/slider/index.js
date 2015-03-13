@@ -1,6 +1,6 @@
-(function(){
-	var root = App.globals.APP_URL + 'pages/UI-Elements/slider/', links = [
-		['Example 1', root + 'ex01.js']
+App.router.define('pages/UI-Elements/slider/index', function(page, pageName){
+	var root = 'pages/UI-Elements/slider/', navgen = App.router.navigateGenerator, links = [
+		['Example 1', navgen(root + 'ex01')]
 	];
-	App.helpers.createPageLinks('UIElementsSliderIdx', links);
-})();
+	App.helpers.createPageLinksWithDefine(page, pageName, links);
+});

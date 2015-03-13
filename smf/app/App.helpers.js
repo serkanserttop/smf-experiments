@@ -1,6 +1,9 @@
 App.helpers = (function(){
 	var globals = App.globals, defaults = App.defaults;
 	function includeIfStringElseExecute(item){
+		if(!item){
+			return;
+		}
 		if(item instanceof Array){
 			for(var i = 0; i < item.length; i++){
 				includeIfStringElseExecute(item[i]);
@@ -156,6 +159,56 @@ App.helpers = (function(){
 		}
 		page.show();
 	}
+	function createPageLinksWithDefine(page, pageName, links){
+		var lbl = new SMF.UI.Label({
+			height : "100%",
+			left: '3%',
+			top: 0,
+			width: '70%',
+			fillColor: 'black',
+			fontColor: 'orange',
+			backgroundTransparent: false,
+			touchEnabled: false
+		});
+
+		var img = new SMF.UI.Image({
+			left: "80%",
+			width: '20%',
+			image: globals.APP_URL + "images/1426022080_icon-ios7-arrow-forward-128.png",
+			changeAnimation: "fade",
+			touchEnabled: false
+		});
+
+		var rBox = new SMF.UI.RepeatBox({
+			width : "100%",
+			height : "100%",
+			left : 0,
+			top : 0,
+			dataSource : links,
+			showScrollbar : true,
+			enablePullDownToRefresh: true,
+			enablePullUpToRefresh: true,
+			onRowRender: function(e){
+				var label = this.controls[0];
+				label.text = e.rowData[0];
+			},
+			onSelectedItem: function(e){
+				var lambdas = links[e.rowIndex].slice(1);
+				includeIfStringElseExecute(lambdas);
+			},
+			itemTemplate: {
+				height: "8%",
+				fillColor: "yellow"
+			}
+		});
+		rBox.itemTemplate.add(lbl);
+		rBox.itemTemplate.add(img);
+
+		page.add(rBox);
+		page.onShow = function(){
+			App.defaults.header(page, pageName);
+		};
+	}
 	function createPageUrlLoadTextButton(parent, txt, url){
 		var txtBtn = new SMF.UI.TextButton({
 			text: txt,
@@ -199,18 +252,15 @@ App.helpers = (function(){
 		var pages_url = globals.APP_URL + 'pages/', libs_url = globals.APP_URL + 'libs/', links = [
 			['Refresh main.js', globals.APP_URL + 'main.js'],
 			['Set C9', function(){
-				var server = (Device.deviceOS === "Android") ? 'android' : 'ios';
-				globals.environment.setServer(server, 3000);
+				globals.environment.setServer('c9.current', 3000);
 				refreshMainLinks();
 			}],
-			['Set Localhost', function(){
-				var server = (Device.deviceOS === "Android") ? 'android' : 'ios';
-				globals.environment.setServer(server, 3000);
+			['Set Emulator', function(){
+				globals.environment.setServer('emulator', 3000);
 				refreshMainLinks();
 			}],
 			['Set Genymotion', function(){
-				var server = (Device.deviceOS === "Android") ? 'genymotion' : 'ios';
-				globals.environment.setServer(server, 3000);
+				globals.environment.setServer('genymotion', 3000);
 				refreshMainLinks();
 			}],
 			['Set Device @Work', function(){
@@ -287,6 +337,7 @@ App.helpers = (function(){
 		generic: {},
 		createPageUrlLoadTextButton: createPageUrlLoadTextButton,
 		createPageLinks: createPageLinks,
+		createPageLinksWithDefine: createPageLinksWithDefine,
 		createPageLinksAndShow: createPageLinks,//BC
 		displayByLimit: displayByLimit,
 		displayTypeAndNameOfControls: displayTypeAndNameOfControls,
