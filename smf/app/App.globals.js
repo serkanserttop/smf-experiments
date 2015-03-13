@@ -60,6 +60,7 @@ App.globals.environment.setServer = function(target, port){
 	}
 	if(server !== ''){ App.globals.APP_URL = 'http://' + server + port + '/'; }
 	else{ App.globals.APP_URL = ''; }
+	App.setConfiguration();
 };
 
 App.setConfiguration = function(env, url) {
@@ -70,7 +71,7 @@ App.setConfiguration = function(env, url) {
 };
 
 if(typeof App.globals.APP_URL === 'undefined'){
+	//App.globals.environment.setServer('c9.current');
 	App.globals.environment.setServer('emulator', 3000);
 }
 //App.globals.environment.setServer('emulator', 3000);
-App.setConfiguration();

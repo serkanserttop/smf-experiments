@@ -1,6 +1,5 @@
 /*globals SMF, App*/
-alert('running pages/UI-Elements/slider/index, ' + App.globals.APP_URL);
-App.router.define('pages/UI-Elements/slider/index', function(page, pageName){
+App.router.define('pages/UI-Elements/slider/ex01', function(page, pageName){
 	function getRandomInt(min, max) {
 		return Math.floor(Math.random() * (max - min)) + min;
 	}
@@ -49,7 +48,7 @@ App.router.define('pages/UI-Elements/slider/index', function(page, pageName){
 	container.add(slider);
 	page.add(txt_btn);
 	page.onShow = function(){
-		alert('showing pages/UI-Elements/slider/index');
+		//alert('showing pages/UI-Elements/slider/ex01');
 		App.defaults.header(page, 'Slider Example 1');
 	};
 });

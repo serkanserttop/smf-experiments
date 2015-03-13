@@ -2,7 +2,7 @@
 (function(){
 	var globals = App.globals, root = 'pages/', pages_url = globals.APP_URL + root, libs_url = globals.APP_URL + 'libs/', links = [
 		//['UI Elements', pages_url + 'UI-Elements/index.js'],
-		['UI Elements', function(){ 
+		['UI Elements', function(){
 			App.router.navigate(root + 'UI-Elements/index');
 		}],
 		['Tests', pages_url + 'Tests/index.js'],
@@ -10,9 +10,7 @@
 		['Update Scripts', function(){
 			var app_url = globals.APP_URL;
 			var apps_url = app_url + 'app/';
-			//alert('Update Scripts');
 			include(app_url + 'libs/router.js');
-
 			include(apps_url + 'App.globals.js');
 			include(apps_url + 'App.defaults.js');
 			if(Device.deviceOS === 'Android'){

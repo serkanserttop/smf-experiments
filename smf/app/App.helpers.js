@@ -252,7 +252,7 @@ App.helpers = (function(){
 		var pages_url = globals.APP_URL + 'pages/', libs_url = globals.APP_URL + 'libs/', links = [
 			['Refresh main.js', globals.APP_URL + 'main.js'],
 			['Set C9', function(){
-				globals.environment.setServer('c9.current', 3000);
+				globals.environment.setServer('c9.current');
 				refreshMainLinks();
 			}],
 			['Set Emulator', function(){
