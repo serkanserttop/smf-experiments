@@ -10,7 +10,7 @@ App.defaults = {
 	page: {
 		backgroundColor: '#D65900',
 		showNavigationBar : true,
-		showStatusBar : false,
+		showStatusBar : true,
 		touchEnabled : true,
 		onKeyPress : function (e) {
 			if(Device.deviceOS !== 'Android'){ return; }
@@ -47,8 +47,8 @@ App.defaults = {
 		imageFillType : 'aspectFit'
 	},
 	header:{
-		fillColor: '#FFFFFF',
-		backgroundColor: '#07B0BE'
+		//fillColor: '#FFFFFF',
+		//backgroundColor: '#07B0BE'
 	},
 	repeatbox: {
 		fillColor: '#333333',

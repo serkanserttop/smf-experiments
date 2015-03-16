@@ -8,8 +8,8 @@ App.defaults.iOS = {
 	},
 	NavigationBar: {
 		visible: true,
-		tintColor: App.defaults.colors.headerWhite || 'orange',
-		backgroundColor: App.defaults.colors.headerBlue || 'black'
+		backgroundColor: App.defaults.colors.headerBlue || 'black',
+		tintColor: App.defaults.colors.headerWhite || 'orange'
 	},
 	navigationItem: {
 		titleView: {
@@ -46,5 +46,5 @@ App.defaults.header = function(page, titleHeader, rightItems) {
 	logo.left = '40%';
 	logo.width = '20%';
 	navBar.backgroundImage = logo;*/
-	navBar.backgroundImage = App.images.url.logo;
+	//SMF.UI.iOS.NavigationBar.backgroundImage = App.images.url.header;
 };

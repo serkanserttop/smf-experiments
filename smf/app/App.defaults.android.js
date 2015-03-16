@@ -32,7 +32,6 @@ App.defaults.header = function actionBar(page, titleHeader, rightItems) {
 		text: titleHeader,
 		width: '30%',
 		textSize: 18,
-		//textColor: "red",
 		left: 0,
 		top: 10
 	});
@@ -58,5 +57,6 @@ App.defaults.header = function actionBar(page, titleHeader, rightItems) {
 	logo.left = '40%';
 	logo.width = '20%';
 	bar.add(logo);*/
-	bar.logo = App.images.url.logo;
+	//bar.logo = App.images.url.header;
+	//bar.backgroundImage = App.images.url.header;
 };

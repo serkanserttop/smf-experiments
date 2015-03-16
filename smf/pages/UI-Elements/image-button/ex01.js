@@ -6,9 +6,9 @@ App.router.define('pages/UI-Elements/image-button/ex01', function(page, pageName
       top : '10%',
       touchEnabled : true,
       imageFillType : SMF.UI.ImageFillType.autosize,
-      defaultImage : App.globals.APP_URL + 'images/addtocart-button01.png',
-      highlightedImage : App.globals.APP_URL + 'images/addtocart-button02.png',
-      inactiveImage : App.globals.APP_URL + 'images/addtocart-button03.png',
+      defaultImage : App.globals.APP_URL + 'images/header.png',
+      highlightedImage : App.globals.APP_URL + 'images/header2.png',
+      inactiveImage : App.globals.APP_URL + 'images/header3.png',
       text : ''
     });
     return img_btn;

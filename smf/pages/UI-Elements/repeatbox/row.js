@@ -1,1 +1,0 @@
-/*globals SMF, App*/

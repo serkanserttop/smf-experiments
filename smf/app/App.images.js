@@ -1,7 +1,8 @@
 (function(){
 	var urls = {
 		arrow: App.globals.APP_URL + 'images/1426022080_icon-ios7-arrow-forward-128.png',
-		logo: App.globals.APP_URL + 'smf-logo.png'
+		header: App.globals.APP_URL + 'images/header2.png',
+		logo: App.globals.APP_URL + 'images/smf-logo.png'
 	};
 	App.images = {
 		url: urls,
