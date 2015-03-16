@@ -119,6 +119,6 @@ App.router.define('pages/UI-Elements/repeatbox/events', function(page, pageName)
   _.each([label_for_events, btn_clear, btn_toggle_hide, rBox], function(item){ page.add(item); });
 	
 	page.onShow = function(){
-		App.helpers.txt_btn_back(page, {top: '90%', left: '70%', width: '30%'});	
+		App.defaults.header(page, pageName);
 	};
 });

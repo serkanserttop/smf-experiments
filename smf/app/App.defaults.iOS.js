@@ -1,14 +1,15 @@
 App.defaults.iOS = {
 	BarButton: {
 		back: {
-			title: 'BACK',
+			title: '<',
+			tintColor: App.defaults.colors.headerWhite || 'orange',
 			onSelected : Pages.back
 		}
 	},
 	NavigationBar: {
 		visible: true,
-		tintColor: 'white',
-		backgroundColor: 'black'
+		tintColor: App.defaults.colors.headerWhite || 'orange',
+		backgroundColor: App.defaults.colors.headerBlue || 'black'
 	},
 	navigationItem: {
 		titleView: {
@@ -29,7 +30,7 @@ App.defaults.header = function(page, titleHeader, rightItems) {
 	});
 
 	var backItem = new iOS.BarButtonItem(_.extend({}, defs.iOS.BarButton.back, {
-		tintColor: 'pink'
+		//tintColor: 'pink'
 	}));
 	
 	var leftItems = [backItem];
@@ -38,6 +39,12 @@ App.defaults.header = function(page, titleHeader, rightItems) {
 	if(rightItems && rightItems.length > 0){
 		navItem.rightBarButtonItems = _.map(rightItems, function(item){
 			return (new iOS.BarButtonItem(item));
-		});;
+		});
 	}
+
+	/*var logo = App.images.logo.clone();
+	logo.left = '40%';
+	logo.width = '20%';
+	navBar.backgroundImage = logo;*/
+	navBar.backgroundImage = App.images.url.logo;
 };

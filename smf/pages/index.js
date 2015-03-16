@@ -12,6 +12,7 @@
 			var apps_url = app_url + 'app/';
 			include(app_url + 'libs/router.js');
 			include(apps_url + 'App.globals.js');
+			include(apps_url + 'App.images.js');
 			include(apps_url + 'App.defaults.js');
 			if(Device.deviceOS === 'Android'){
 				include(apps_url + 'App.defaults.android.js');

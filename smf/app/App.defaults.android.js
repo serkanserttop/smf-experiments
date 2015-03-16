@@ -2,7 +2,8 @@ App.defaults.android = {
 	actionBar: {
 		bar: {
 			visible: true,
-			backgroundColor: "white",
+			backgroundColor: App.defaults.colors.headerBlue || 'black',
+			itemTextColor: App.defaults.colors.headerWhite || 'orange',
 			onHomeIconItemSelected: Pages.back,
 			displayShowTitleEnabled: true,
 			displayShowHomeEnabled: true,
@@ -10,7 +11,7 @@ App.defaults.android = {
 		},
 		menuItemBack: {
 			id: "itemBack",
-			title: 'BACK',
+			title: '<',
 			showAsAction: SMF.UI.Android.ShowAsAction.always,
 			onSelected: Pages.back
 		},
@@ -31,7 +32,7 @@ App.defaults.header = function actionBar(page, titleHeader, rightItems) {
 		text: titleHeader,
 		width: '30%',
 		textSize: 18,
-		textColor: "red",
+		//textColor: "red",
 		left: 0,
 		top: 10
 	});
@@ -52,4 +53,10 @@ App.defaults.header = function actionBar(page, titleHeader, rightItems) {
 	if(actionbarItems.length > 0){
 		bar.menuItems = actionbarItems;
 	}
+	
+	/*var logo = App.images.logo.clone();
+	logo.left = '40%';
+	logo.width = '20%';
+	bar.add(logo);*/
+	bar.logo = App.images.url.logo;
 };

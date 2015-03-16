@@ -1,5 +1,5 @@
 App.helpers = (function(){
-	var globals = App.globals, defaults = App.defaults;
+	var globals = App.globals, defaults = App.defaults || {}, colors = defaults.colors || {};
 	function includeIfStringElseExecute(item){
 		if(!item){
 			return;
@@ -32,23 +32,35 @@ App.helpers = (function(){
 		}
 		var page = Pages[pageName];
 		page.clear();
+		var colors = defaults.colors || {};
 
 		var lbl = new SMF.UI.Label({
 			height : "100%",
 			left: '3%',
 			top: 0,
 			width: '70%',
-			fillColor: 'black',
-			fontColor: 'orange',
+			fillColor: colors.repeatBoxGrey || 'black',
+			fontColor: colors.repeatBoxBlue || 'orange',
 			backgroundTransparent: false,
 			touchEnabled: false
 		});
 
-		var img = new SMF.UI.Image({
+		/*var arrow = new SMF.UI.Image({
 			left: "80%",
 			width: '20%',
 			image: globals.APP_URL + "images/1426022080_icon-ios7-arrow-forward-128.png",
 			changeAnimation: "fade",
+			touchEnabled: false
+		});*/
+
+		var arrow = new SMF.UI.Label({
+			left: "80%",
+			width: '20%',
+			text: '>',
+			//top: 0,
+			fillColor: colors.repeatBoxGrey || 'black',
+			fontColor: colors.repeatBoxBlue || 'orange',
+			backgroundTransparent: true,
 			touchEnabled: false
 		});
 
@@ -66,58 +78,14 @@ App.helpers = (function(){
 				label.text = e.rowData[0];
 			},
 			onSelectedItem: function(e){
-				/*function includeIfStringElseExecute(item){
-					if(item instanceof Array){
-						for(var i = 0; i < item.length; i++){
-							includeIfStringElseExecute(item[i]);
-						}
-					}
-					else if(typeof item === 'function'){
-						var items = item();
-						if(items){
-							includeIfStringElseExecute(items);
-						}
-					}
-					else if(typeof item === 'string'){
-						include(item);
-					}
-				}*/
-
 				var lambdas = links[e.rowIndex].slice(1);
 				includeIfStringElseExecute(lambdas);
-				/*for(var i = 0; i < lambdas.length; i++){
-					var item = lambdas[i];
-					if(item instanceof Array){
-						for(var j = 0; j < item.length; i++){
-							includeIfStringElseExecute(item[i]);
-						}
-					}
-					else if(typeof item === 'function'){
-						var items = item();
-						if(items){
-							includeIfStringElseExecute(items);
-						}
-					}
-					else if(typeof item === 'string'){
-						include(item);
-					}
-				}*/
-				/*
-				for(var i = 0; i < lambdas.length; i++){
-					var lambda = lambdas[i];
-					if(typeof lambda === 'function'){
-						lambda();
-					}
-					else if(typeof lambda === 'string'){
-						include(lambda);	
-					}
-				}*/
 			}
 		});
 		rBox.itemTemplate.height = "8%";
-		rBox.itemTemplate.fillColor = "yellow";
+		rBox.itemTemplate.fillColor = colors.repeatBoxGrey || "yellow";
 		rBox.itemTemplate.add(lbl);
-		rBox.itemTemplate.add(img);
+		rBox.itemTemplate.add(arrow);
 
 		page.add(rBox);
 		page.show();
@@ -156,27 +124,45 @@ App.helpers = (function(){
 			var tc = target.controls, len = tc.length;
 			var last_control = tc[len - 1];
 			target.contentHeight = last_control.top + last_control.height;
-		}
+		};
 		page.show();
 	}
 	function createPageLinksWithDefine(page, pageName, links){
 		var lbl = new SMF.UI.Label({
 			height : "100%",
-			left: '3%',
+			left: '10%',
 			top: 0,
-			width: '70%',
-			fillColor: 'black',
-			fontColor: 'orange',
-			backgroundTransparent: false,
+			width: '100%',
+			fillColor: colors.repeatBoxGrey || 'black',
+			fontColor: colors.repeatBoxBlue || 'orange',
 			touchEnabled: false
 		});
 
-		var img = new SMF.UI.Image({
+		var arrow = new SMF.UI.Label({
+			height : "100%",
+			left: "90%",
+			width: '10%',
+			top: 0,
+			text: '>',
+			fillColor: colors.repeatBoxGrey || 'black',
+			fontColor: colors.repeatBoxBlue || 'orange',
+			touchEnabled: false
+		});
+
+		/*var arrow = new SMF.UI.Image({
 			left: "80%",
 			width: '20%',
 			image: globals.APP_URL + "images/1426022080_icon-ios7-arrow-forward-128.png",
 			changeAnimation: "fade",
 			touchEnabled: false
+		});*/
+
+		var line = new SMF.UI.Line({
+			top: '93%',
+			left: 0,
+			width: '100%',
+			borderColor: colors.repeatBoxBlue || 'orange',
+			borderWidth: '1%',
 		});
 
 		var rBox = new SMF.UI.RepeatBox({
@@ -197,14 +183,17 @@ App.helpers = (function(){
 				includeIfStringElseExecute(lambdas);
 			},
 			itemTemplate: {
-				height: "8%",
-				fillColor: "yellow"
+				height: App.defaults.repeatbox.height || '8%',
+				fillColor: App.defaults.repeatbox.fillColor || 'yellow'
 			}
 		});
+
 		rBox.itemTemplate.add(lbl);
-		rBox.itemTemplate.add(img);
+		rBox.itemTemplate.add(arrow);
+		rBox.itemTemplate.add(line);
 
 		page.add(rBox);
+		page.backgroundColor = App.defaults.page.backgroundColor;
 		page.onShow = function(){
 			App.defaults.header(page, pageName);
 		};
@@ -315,11 +304,10 @@ App.helpers = (function(){
 	function updateScripts(){
 		var app_url_cached = globals.APP_URL;
 		var apps_url = app_url_cached + 'app/';
-		alert('updateScripts');
-		include(app_url_cached + 'libs/router.js');
-		//App.router = new Router();
-
+		//alert('updateScripts');
+		App.router.include(app_url_cached + 'libs/router.js');
 		App.router.include(apps_url + 'App.globals.js');
+		App.router.include(apps_url + 'App.images.js');
 		App.router.include(apps_url + 'App.defaults.js');
 		if(Device.deviceOS === 'Android'){
 			App.router.include(apps_url + 'App.defaults.android.js');
@@ -337,8 +325,8 @@ App.helpers = (function(){
 		generic: {},
 		createPageUrlLoadTextButton: createPageUrlLoadTextButton,
 		createPageLinks: createPageLinks,
-		createPageLinksWithDefine: createPageLinksWithDefine,
 		createPageLinksAndShow: createPageLinks,//BC
+		createPageLinksWithDefine: createPageLinksWithDefine,
 		displayByLimit: displayByLimit,
 		displayTypeAndNameOfControls: displayTypeAndNameOfControls,
 		refreshMainLinks: refreshMainLinks,
