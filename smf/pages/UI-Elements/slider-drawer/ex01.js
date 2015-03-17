@@ -1,11 +1,5 @@
 /*globals SMF, Pages, keys*/
-(function(){
-    var pageName = 'UIElementsSliderDrawerEx01';
-	var page = new SMF.UI.Page({
-        name: pageName,
-		onKeyPress: App.defaults.page.onKeyPress
-	});
-	page.clear();
+App.router.define('pages/UI-Elements/slider-drawer/ex01', function(page, pageName){
 
     var slider_drawer = new SMF.UI.SliderDrawer({
         width : '30%',
@@ -38,6 +32,4 @@
     slider_drawer.add(sliderTxtBtnHide);
 
     App.helpers.txt_btn_back(page, {top: '60%', left: '10%'});
-    
-    page.show();
-})();
+});

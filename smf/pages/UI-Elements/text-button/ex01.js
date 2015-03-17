@@ -1,13 +1,7 @@
 /* globals load, include, Pages, SMF, globals, keys*/
-(function(){
+App.router.define('pages/UI-Elements/text-button/events', function(page, pageName){
   var toggleImages;
   var HOME_URL = App.globals.APP_URL;
-  var pageName = 'UIElementsTextButtonEx01';
-  var page = new SMF.UI.Page({
-    name: pageName,
-    onKeyPress: App.defaults.page.onKeyPress
-  });
-  page.clear();
   
   txt_btn1();
   txt_btn2();
@@ -81,8 +75,5 @@
     }
   })();
   
-  App.helpers.txt_btn_back(page, {top: '60%', left: '10%'});
-
-  page.show();
-    
-})()
+  App.helpers.txt_btn_back(page, {top: '60%', left: '10%'}); 
+});

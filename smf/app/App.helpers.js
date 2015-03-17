@@ -321,6 +321,9 @@ App.helpers = (function(){
 		App.globals.APP_URL = app_url_cached;
 		App.helpers.refreshMainLinks();
 	}
+	function pageShow(name){
+		Pages[name].show();
+	}
 	return {
 		generic: {},
 		createPageUrlLoadTextButton: createPageUrlLoadTextButton,
@@ -329,6 +332,7 @@ App.helpers = (function(){
 		createPageLinksWithDefine: createPageLinksWithDefine,
 		displayByLimit: displayByLimit,
 		displayTypeAndNameOfControls: displayTypeAndNameOfControls,
+		pageShow: pageShow,
 		refreshMainLinks: refreshMainLinks,
 		removeChildren: removeChildren,
 		txt_btn_back: txt_btn_back,

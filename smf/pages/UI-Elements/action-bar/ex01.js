@@ -1,5 +1,5 @@
 /*globals SMF, App*/
-(function(){
+App.router.define('pages/UI-Elements/action-bar/ex01', function(page, pageName){
 	function navigation(page, titleHeader, rightItems) {
 		var iOS = SMF.UI.iOS, navBar = iOS.NavigationBar, navItem = page.navigationItem;
 		
@@ -77,26 +77,25 @@
 		}), function(val, key){ bar[key] = val; });
 	}
 
-	App.router.define('pages/UI-Elements/action-bar/ex01', function(page, pageName){
-		var titleHeader = 'Action / Nav Bar Example 1';
-		page.onShow = function(e){
-			if(Device.deviceOS === 'Android'){
-				actionBar(page, titleHeader, {
-			    title: 'Android Specific',
-			    showAsAction: SMF.UI.Android.ShowAsAction.ifRoom,
-			    onSelected: function(e){
-			      alert('Android does not need a BACK button');
-			    }
-			  });
-			}
-			else{
-				navigation(page, titleHeader, {
-					title: 'Android Specific',
-			    onSelected: function(e){
-			      alert('iOS needs a BACK button');
-			    }
-				});
-			}
+	var titleHeader = 'Action / Nav Bar Example 1';
+	page.onShow = function(e){
+		if(Device.deviceOS === 'Android'){
+			actionBar(page, titleHeader, {
+		    title: 'Android Specific',
+		    showAsAction: SMF.UI.Android.ShowAsAction.ifRoom,
+		    onSelected: function(e){
+		      alert('Android does not need a BACK button');
+		    }
+		  });
 		}
-	});
-})();
+		else{
+			navigation(page, titleHeader, {
+				title: 'Android Specific',
+		    onSelected: function(e){
+		      alert('iOS needs a BACK button');
+		    }
+			});
+		}
+	}
+
+});

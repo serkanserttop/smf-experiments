@@ -1,13 +1,5 @@
 /* globals load, include, App.helpers, Pages, SMF, globals, keys*/
-(function(){
-  var toggleImages;
-  var HOME_URL = App.globals.APP_URL;
-  var pageName = 'UIElementsTextButtonExEvents';
-  var page = new SMF.UI.Page({
-    name: pageName,
-    onKeyPress: App.defaults.page.onKeyPress
-  });
-  page.clear();
+App.router.define('pages/UI-Elements/text-button/events', function(page, pageName){
   var label;
   txt_btn_events();
   txt_btn_clear();
@@ -70,8 +62,5 @@
       left: '10%'
     });
     page.add(label);
-  }
-  
-  page.show();
-    
-})()
+  }    
+});

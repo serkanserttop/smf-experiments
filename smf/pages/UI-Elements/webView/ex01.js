@@ -1,12 +1,5 @@
 /*globals SMF, Pages, keys*/
-(function(){
-	var pageName = 'UIElementsWebViewEx01', defaults = App.defaults;
-	var page = new SMF.UI.Page({
-    name: pageName,
-		onKeyPress: defaults.page.onKeyPress
-	});
-	page.clear();
-
+App.router.define('pages/UI-Elements/webView/ex01', function(page, pageName){
 	var webViewPage = new SMF.UI.WebView({
     top: "10%",
     left: "10%",
@@ -14,6 +7,4 @@
 	});
 
 	page.add(webViewPage);
-
-	page.show();
-})();
+});

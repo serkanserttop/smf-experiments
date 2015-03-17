@@ -1,14 +1,7 @@
 /*globals SMF, Pages, keys*/
-(function(){
+App.router.define('pages/UI-Elements/slider-drawer/events', function(page, pageName){
   
-  var pageName = 'UIElementsSliderDrawerEvents', defaults = App.defaults, generic = App.helpers.generic;
-	var page = new SMF.UI.Page({
-    name: pageName,
-		fillColor:"wheat",
-		onKeyPress: defaults.page.onKeyPress
-	});
-	page.clear();
-
+  var defaults = App.defaults, generic = App.helpers.generic;
   var eventNames = ['onControlAdded', 'onControlRemoved', 'onHide', 'onShow'];
   var logger = generic.eventLogGenerator(page);
   var events = generic.generateEventCallbacks(eventNames, logger.log);
@@ -44,6 +37,4 @@
 
 	App.helpers.txt_btn_back(page, {top: '90%', left: '60%', width: '30%'});
 
-	page.show();
-
-})();
+});

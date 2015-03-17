@@ -1,13 +1,7 @@
 /*globals SMF, Pages, keys*/
-(function(){
+App.router.define('pages/UI-Elements/searchbar/events', function(page, pageName){
   
-  var pageName = 'UIElementsSearchBarEvents', defaults = App.defaults, generic = App.helpers.generic;
-	var page = new SMF.UI.Page({
-    name: pageName,
-		fillColor: "wheat",
-		onKeyPress: defaults.page.onKeyPress
-	});
-	page.clear();
+  var defaults = App.defaults, generic = App.helpers.generic;
 
 	var headerDeviceSpecific;
 	if(Device.deviceOS === "Android"){
@@ -41,6 +35,7 @@
 
 	page.add(search_bar);
 	page.onShow = function(e){
-		App.defaults.header(page, 'SearchBar Events');
+    var rightBarButtomClear = logger.generic_clear_button;
+		App.defaults.header(page, 'SearchBar Events', [rightBarButtomClear]);
 	};
 });

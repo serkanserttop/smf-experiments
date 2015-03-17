@@ -18,20 +18,6 @@ App.helpers.generic.eventLogGenerator = (function(){
     }, opts));
     return txt_btn;
   }
-  function createButtonClearText(target, opts){
-    var btn = new SMF.UI.TextButton(_.extend({
-      top: "20%",
-      left: "60%",
-      width: "40%",
-      text: "Clear",
-      fillColor: "red",
-      fontColor: "white",
-      onPressed: function(e) {
-        target.text = '';
-      }
-    }, opts));
-    return btn;
-  }
   function createLabelForEvents(opts){
     var label = new SMF.UI.Label(_.extend({
       text: '',
@@ -46,13 +32,16 @@ App.helpers.generic.eventLogGenerator = (function(){
     return label;
   }
   function create(page, target, opts){
+    function clear(){
+      label_for_events.text = '';
+    }
     opts = opts || {};
-    var label_for_events = createLabelForEvents(opts.label_for_events);
+    var label_for_events = createLabelForEvents(opts.label_for_events), self = this;
     page.add(label_for_events);
-    if(opts.createClearButton !== false){
+    /*if(opts.createClearButton !== false){
       var btn_clear = createButtonClearText(label_for_events, opts.btn_clear);
       page.add(btn_clear);
-    }
+    }*/
     if(!(!target && !opts.createToggleButton)){
       var btn_toggle_hide = createButtonHideToggle(target, opts.btn_toggle_hide);
       page.add(btn_toggle_hide);
@@ -61,6 +50,13 @@ App.helpers.generic.eventLogGenerator = (function(){
     //this.btn_toggle_hide = btn_toggle_hide;
     this.label_for_events = label_for_events;
     return {
+      clear: clear,
+      generic_clear_button: {
+        title: 'Clear',
+        onSelected: function(e){
+          clear();
+        }
+      },
       log: function(txt){
         logEvent(label_for_events, txt);
       }
