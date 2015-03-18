@@ -35,6 +35,6 @@ App.router.define('pages/UI-Elements/slider-drawer/events', function(page, pageN
 
   addHideToSliderDrawer(slider_drawer);
 
-	App.helpers.txt_btn_back(page, {top: '90%', left: '60%', width: '30%'});
+	//App.helpers.txt_btn_back(page, {top: '90%', left: '60%', width: '30%'});
 
 });

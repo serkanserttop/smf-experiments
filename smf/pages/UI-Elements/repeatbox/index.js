@@ -4,5 +4,5 @@ App.router.define('pages/UI-Elements/repeatbox/index', function(page, pageName){
 		['Example 2', navgen(root + 'ex02')],
 		['Events', navgen(root + 'events')]
 	];
-	App.helpers.createPageLinksWithDefine(page, pageName, links);
+	App.helpers.createLinks(page, pageName, links);
 });

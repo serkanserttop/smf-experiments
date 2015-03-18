@@ -1,7 +1,5 @@
 /*globals SMF, Pages, keys*/
 App.router.define('pages/UI-Elements/repeatbox/ex01', function(page, pageName){
-	//page.fillColor = 'violet';
-
 	var static_array = [
 		{'lang': 'Javascript'},
 		{'lang': 'Ruby'},

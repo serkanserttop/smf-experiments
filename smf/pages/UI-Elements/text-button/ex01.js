@@ -53,9 +53,9 @@ App.router.define('pages/UI-Elements/text-button/events', function(page, pageNam
       left: "10%",
       //touchEnabled : false,
       imageFillType : SMF.UI.ImageFillType.autosize,
-      defaultImage : HOME_URL + "buttons/addtocart-button01.png",
-      highlightedImage : HOME_URL + "buttons/addtocart-button02.png",
-      inactiveImage : HOME_URL + "buttons/addtocart-button03.png",
+      defaultImage : 'header.png',
+      highlightedImage : 'header2.png',
+      inactiveImage : 'header3.png',
       //,text : "Placeholder"
       onPressed : function(e){
         alert('hello');
@@ -75,5 +75,5 @@ App.router.define('pages/UI-Elements/text-button/events', function(page, pageNam
     }
   })();
   
-  App.helpers.txt_btn_back(page, {top: '60%', left: '10%'}); 
+  //App.helpers.txt_btn_back(page, {top: '60%', left: '10%'}); 
 });

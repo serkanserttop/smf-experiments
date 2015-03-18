@@ -6,5 +6,7 @@ App.router.define('pages/UI-Elements/webView/ex01', function(page, pageName){
     URL: "http://developer.smartface.io"
 	});
 
-	page.add(webViewPage);
+	page.onShow = function(e){
+		page.add(webViewPage);
+	}
 });

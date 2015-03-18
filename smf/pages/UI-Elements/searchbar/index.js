@@ -5,5 +5,5 @@ App.router.define('pages/UI-Elements/searchbar/index', function(page, pageName){
 		['Events', navgen(root + 'events')],
 		['Header', navgen(root + 'header')]
 	];
-	App.helpers.createPageLinksWithDefine(page, pageName, links);
+	App.helpers.createLinks(page, pageName, links);
 });

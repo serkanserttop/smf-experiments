@@ -14,7 +14,7 @@ App.router.define('pages/UI-Elements/repeatbox/ex02', function(page, pageName){
 	function updateRepeatBoxWithNewItems(repeatBox, items){
 		repeatBox.dataSource = items;
 		repeatBox.refresh();
-		setTimeout(function(){ rBox.closePullItems() } , 50);
+		setTimeout(function(){ repeatBox.closePullItems(); }, 5);
 	}
 
 	//page.fillColor = 'violet';

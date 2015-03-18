@@ -24,110 +24,7 @@ App.helpers = (function(){
 			}
 		}
 	}
-	function createPageLinks(pageName, links){
-		if(typeof Pages[pageName] === 'undefined'){
-			Pages[pageName] = new SMF.UI.Page({
-				onKeyPress: defaults.page.onKeyPress
-			});
-		}
-		var page = Pages[pageName];
-		page.clear();
-		var colors = defaults.colors || {};
-
-		var lbl = new SMF.UI.Label({
-			height : "100%",
-			left: '3%',
-			top: 0,
-			width: '70%',
-			fillColor: colors.repeatBoxGrey || 'black',
-			fontColor: colors.repeatBoxBlue || 'orange',
-			backgroundTransparent: false,
-			touchEnabled: false
-		});
-
-		/*var arrow = new SMF.UI.Image({
-			left: "80%",
-			width: '20%',
-			image: globals.APP_URL + "images/1426022080_icon-ios7-arrow-forward-128.png",
-			changeAnimation: "fade",
-			touchEnabled: false
-		});*/
-
-		var arrow = new SMF.UI.Label({
-			left: "80%",
-			width: '20%',
-			text: '>',
-			//top: 0,
-			fillColor: colors.repeatBoxGrey || 'black',
-			fontColor: colors.repeatBoxBlue || 'orange',
-			backgroundTransparent: true,
-			touchEnabled: false
-		});
-
-		var rBox = new SMF.UI.RepeatBox({
-			width : "100%",
-			height : "100%",
-			left : 0,
-			top : 0,
-			dataSource : links,
-			showScrollbar : true,
-			enablePullDownToRefresh: true,
-			enablePullUpToRefresh: true,
-			onRowRender: function(e){
-				var label = this.controls[0];
-				label.text = e.rowData[0];
-			},
-			onSelectedItem: function(e){
-				var lambdas = links[e.rowIndex].slice(1);
-				includeIfStringElseExecute(lambdas);
-			}
-		});
-		rBox.itemTemplate.height = "8%";
-		rBox.itemTemplate.fillColor = colors.repeatBoxGrey || "yellow";
-		rBox.itemTemplate.add(lbl);
-		rBox.itemTemplate.add(arrow);
-
-		page.add(rBox);
-		page.show();
-		App.defaults.header(page, pageName);
-	}
-	function createPageScrollLinks(pageName, links, targetName){
-		if(typeof Pages[pageName] === 'undefined'){
-			Pages[pageName] = new SMF.UI.Page({
-				onKeyPress: defaults.page.onKeyPress
-			});
-		}
-		var page = Pages[pageName];
-		page.clear();
-		if(!targetName){
-			targetName = 'ScrollView12';
-		}
-		var target = page[targetName] = new SMF.UI.ScrollView({
-			top: "0%",
-			left: "0%",
-			width: "100%",
-			height: "100%",
-			contentHeight: "100%",
-			contentWidth: "100%"
-		});
-		page.add(target);
-		
-		for(var i = 0; i < links.length; i++){
-			var row = links[i];
-			createPageUrlLoadTextButton(target, row[0], row[1]);
-		}
-		target.layoutType = SMF.UI.LayoutType.linear;
-		target.orientation = SMF.UI.Orientation.vertical;
-		target.autosize = true;
-		page.onShow = function(){
-			App.defaults.header(page, pageName);
-			var tc = target.controls, len = tc.length;
-			var last_control = tc[len - 1];
-			target.contentHeight = last_control.top + last_control.height;
-		};
-		page.show();
-	}
-	function createPageLinksWithDefine(page, pageName, links){
+	function createLinks(page, pageName, links){
 		var lbl = new SMF.UI.Label({
 			height : "100%",
 			left: '10%',
@@ -148,14 +45,6 @@ App.helpers = (function(){
 			fontColor: colors.repeatBoxBlue || 'orange',
 			touchEnabled: false
 		});
-
-		/*var arrow = new SMF.UI.Image({
-			left: "80%",
-			width: '20%',
-			image: globals.APP_URL + "images/1426022080_icon-ios7-arrow-forward-128.png",
-			changeAnimation: "fade",
-			touchEnabled: false
-		});*/
 
 		var line = new SMF.UI.Line({
 			top: '93%',
@@ -198,44 +87,19 @@ App.helpers = (function(){
 			App.defaults.header(page, pageName);
 		};
 	}
-	function createPageUrlLoadTextButton(parent, txt, url){
-		var txtBtn = new SMF.UI.TextButton({
-			text: txt,
-			width: '97%',
-			height: '50dp',
-			onPressed: function(){
-				if(typeof url === 'function'){
-					url();
+	function definePage(pageName, callback){
+		if (typeof Pages[pageName] !== 'undefined') {
+			Pages[pageName].clear();
+		} else {
+			Pages[pageName] = new SMF.UI.Page({
+				fillColor: App.defaults.colors.repeatBoxGrey,
+				onKeyPress: App.defaults.page.onKeyPress,
+				onShow: function(){
+					App.defaults.header(Pages[pageName]);
 				}
-				else if(typeof url === 'string'){
-					include(url);	
-				}
-			}
-		});
-		parent.add(txtBtn);
-	}
-	function displayByLimit(controls, limit){
-		limit = limit || 10;
-		if(!(controls instanceof Array)){
-			controls = Object.keys(controls);
+			});
 		}
-		var stack = [];
-		for(var i = 0; i < controls.length; i++){
-			stack.push(controls[i]);
-			if((i + 1) % limit === 0){
-				alert(stack.join(', '));
-				stack = [];
-			}
-		}
-		alert(stack.join(', '));
-	}
-	function displayTypeAndNameOfControls(controls, start){
-		var len = Pages.Page1.ScrollView.controls.length;
-		start = start || 0;
-		for(var i = start; i < len; i++){
-			var ctrl = Pages.Page1.ScrollView.controls[i];
-			alert(ctrl.type + ', ' + ctrl.name);
-		}
+		callback(Pages[pageName], pageName);
 	}
 	function refreshMainLinks(){
 		var pages_url = globals.APP_URL + 'pages/', libs_url = globals.APP_URL + 'libs/', links = [
@@ -274,14 +138,7 @@ App.helpers = (function(){
 				refreshMainLinks();
 			}]);
 		}
-		createPageLinks('Page1', links);
-	}
-	function removeChildren(parent, start, stop){
-		var end = stop || parent.controls.length;
-		var begin = start || 0;
-		for(var i = end; i > begin - 1; i--){
-			parent.remove(parent.controls[i]);
-		}
+		createLinks(Pages.Page1, 'Page1', links);
 	}
 	function txt_btn_back(parent, obj){
 		if(!obj){
@@ -322,19 +179,17 @@ App.helpers = (function(){
 		App.helpers.refreshMainLinks();
 	}
 	function pageShow(name){
-		Pages[name].show();
+		return function(){
+			Pages[name].show();
+		};
 	}
 	return {
 		generic: {},
-		createPageUrlLoadTextButton: createPageUrlLoadTextButton,
-		createPageLinks: createPageLinks,
-		createPageLinksAndShow: createPageLinks,//BC
-		createPageLinksWithDefine: createPageLinksWithDefine,
-		displayByLimit: displayByLimit,
-		displayTypeAndNameOfControls: displayTypeAndNameOfControls,
+		createPageLinksAndShow: createLinks,//BC
+		//createPageLinks: createLinks,
+		createLinks: createLinks,
 		pageShow: pageShow,
 		refreshMainLinks: refreshMainLinks,
-		removeChildren: removeChildren,
 		txt_btn_back: txt_btn_back,
 		updateScripts: updateScripts
 	};

@@ -8,7 +8,11 @@ Router.prototype.define = function(pageName, callback) {
 		Pages[pageName].clear();
 	} else {
 		Pages[pageName] = new SMF.UI.Page({
-			onKeyPress: App.defaults.page.onKeyPress
+			fillColor: App.defaults.colors.repeatBoxGrey,
+			onKeyPress: App.defaults.page.onKeyPress,
+			onShow: function(){
+				App.defaults.header(Pages[pageName]);
+			}
 		});
 	}
 	var self = this;

@@ -11,9 +11,9 @@ App.router.define('pages/UI-Elements/image-button/events', function(page, pageNa
       top : '5%',
       touchEnabled : true,
       imageFillType : SMF.UI.ImageFillType.autosize,
-      defaultImage : App.globals.APP_URL + 'images/header.png',
-      highlightedImage : App.globals.APP_URL + 'images/header2.png',
-      inactiveImage : App.globals.APP_URL + 'images/header3.png',
+      defaultImage : 'header.png',
+      highlightedImage : 'header2.png',
+      inactiveImage : 'header3.png',
       text : '',
       onDoubleTap: function(e) { appendText(label, 'onDoubleTap'); },
       onHide: function(e) { appendText(label, 'onHide'); },
@@ -71,8 +71,5 @@ App.router.define('pages/UI-Elements/image-button/events', function(page, pageNa
       }
     };
     App.defaults.header(page, pageName, [rightBarButtomHide, rightBarButtomClear]);
-    //page.actionBar.displayShowHomeEnabled = true;
-    //page.actionBar.title = 'test';
-    //page.actionBar.onHomeIconItemSelected = function(){ Pages.back(); };
   };
 });

@@ -1,8 +1,8 @@
 App.router.define('pages/UI-Elements/hello-world/textbutton', function(page, pageName){
 	var btn = new SMF.UI.TextButton({
-		text: "Hello World",
+		text: "Click Me",
 		onPressed: function(e){
-			alert("I am a Native Component");
+			alert("TextButton Says Hello");
 		}
 	});
 	page.add(btn);

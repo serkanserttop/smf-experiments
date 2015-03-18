@@ -43,10 +43,10 @@ App.router.define('pages/UI-Elements/action-bar/ex01', function(page, pageName){
 		var navBarDefaults = {
 			visible: true,
 			backgroundColor: "white",
-			onHomeIconItemSelected: Pages.back,
-			displayShowTitleEnabled: true,
+			//displayShowTitleEnabled: true,
 			displayShowHomeEnabled: true,
-			displayHomeAsUpEnabled: false
+			displayHomeAsUpEnabled: true,
+			onHomeIconItemSelected: Pages.back
 		};
 
 		var titleViewDefaults = {

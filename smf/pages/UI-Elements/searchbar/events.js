@@ -25,12 +25,12 @@ App.router.define('pages/UI-Elements/searchbar/events', function(page, pageName)
   var events = generic.generateEventCallbacks(eventNames, logger.log);
 
 	var search_bar = new SMF.UI.SearchBar(_.extend({
-		placeHolder: "Enter Name",
+		//placeHolder: "Enter Text",
 		top: "0",
 		left: "10%",
 		height: '10%',
 		width: "100%"
-		,text: "" //iOS fix for unwanted quotes
+		,text: "Enter Text" //iOS fix for unwanted quotes
 	}, headerDeviceSpecific, events));
 
 	page.add(search_bar);

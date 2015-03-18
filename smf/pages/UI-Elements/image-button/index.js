@@ -3,5 +3,5 @@ App.router.define('pages/UI-Elements/image-button/index', function(page, pageNam
 		['Example 1', navgen(root + 'ex01')],
 		['Events', navgen(root + 'events')]
 	];
-	App.helpers.createPageLinksWithDefine(page, pageName, links);
+	App.helpers.createLinks(page, pageName, links);
 });

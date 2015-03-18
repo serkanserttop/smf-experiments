@@ -1,17 +1,19 @@
 (function(){
-	var urls = {
-		arrow: App.globals.APP_URL + 'images/1426022080_icon-ios7-arrow-forward-128.png',
-		header: App.globals.APP_URL + 'images/header2.png',
-		logo: App.globals.APP_URL + 'images/smf-logo.png'
+	var image_root = (App.globals.APP_URL === '') ? '' : App.globals.APP_URL + 'images/';
+	var url = {
+		arrow: '1426022080_icon-ios7-arrow-forward-128.png',
+		headerBack: 'header3.png',
+		logo: 'smf-logo.png'
 	};
 	App.images = {
-		url: urls,
+		url: url,
+		root: image_root,
 		arrow: new SMF.UI.Image({
-			image: urls.arrow,
+			image: url.arrow,
 			touchEnabled: false
 		}),
 		logo: new SMF.UI.Image({
-			image: urls.logo,
+			image: url.logo,
 			touchEnabled: false
 		})
 	};

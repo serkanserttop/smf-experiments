@@ -46,5 +46,5 @@ App.defaults.header = function(page, titleHeader, rightItems) {
 	logo.left = '40%';
 	logo.width = '20%';
 	navBar.backgroundImage = logo;*/
-	//SMF.UI.iOS.NavigationBar.backgroundImage = App.images.url.header;
+	//SMF.UI.iOS.NavigationBar.backgroundImage = App.images.url.headerBack;
 };

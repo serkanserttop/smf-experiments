@@ -23,20 +23,22 @@ App.helpers.generic.eventLogGenerator = (function(){
       text: '',
       multipleLine: true,
       showScrollBar: true,
-      autoSize: true,
-      top: '30%',
-      height: '100%',
-      width: '40%',
-      left: '50%'
+      textAlignment: 'topLeft',
+      autoSize: false,
+      top: '20%',
+      height: '60%',
+      width: '80%',
+      left: '10%'
     }, opts));
     return label;
   }
   function create(page, target, opts){
+    var self = this;
     function clear(){
-      label_for_events.text = '';
+      self.label_for_events.text = '';
     }
     opts = opts || {};
-    var label_for_events = createLabelForEvents(opts.label_for_events), self = this;
+    var label_for_events = createLabelForEvents(opts.label_for_events);
     page.add(label_for_events);
     /*if(opts.createClearButton !== false){
       var btn_clear = createButtonClearText(label_for_events, opts.btn_clear);

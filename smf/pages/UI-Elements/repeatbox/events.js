@@ -12,45 +12,16 @@ App.router.define('pages/UI-Elements/repeatbox/events', function(page, pageName)
     var old = target.text;
     target.text = old + '\n' + txt;
   }
-  function create_txt_btn_toggle_hide(target){
-    var txt_btn = new SMF.UI.TextButton({
-      top: "10%",
-      left: "60%",
-      width: "40%",
-      text: "Hide",
-      onPressed: function(){
-        var visible = target.visible;
-        var txt = (visible) ? 'Show' : 'Hide';
-        target.visible = !visible;
-        this.text = txt;
-      }
-    });
-    return txt_btn;
-  }
-    
-  function create_txt_btn_clear(target){
-    var btn = new SMF.UI.TextButton({
-      top: "20%",
-      left: "60%",
-      width: "40%",
-      text: "Clear",
-      fillColor: "red",
-      fontColor: "white",
-      onPressed: function(e) {
-        target.text = '';
-      }
-    });
-    return btn;
-  }
   
   function create_label_for_events(){
-    label = new SMF.UI.Label({
-      text: '',
+    var label = new SMF.UI.Label({
+    	text: '',
       multipleLine: true,
       showScrollBar: true,
-      autoSize: true,
-      top: '30%',
-      height: '100%',
+      textAlignment: 'topLeft',
+      autoSize: false,
+      top: '10%',
+      height: '60%',
       width: '40%',
       left: '50%'
     });
@@ -78,7 +49,18 @@ App.router.define('pages/UI-Elements/repeatbox/events', function(page, pageName)
 		backgroundTransparent: false
 	});
 
-	var rBox = new SMF.UI.RepeatBox({
+	var eventNames = [
+		'onHide', 'onLongTouch', 'onPullDown', 'onPullUp', 
+		'onRowDeleted', 'onRowDeleting', 'onSelectedItem', 'onSelectionChanged',
+		'onShow', 'onSwipe', 'onTouch', 'onTouchEnded'
+	];
+	var events = {};
+	_.each(eventNames, function(eventName){
+		events[eventName] = function(){
+			logNewEvent(eventName);
+		};
+	});
+	var rBox = new SMF.UI.RepeatBox(_.extend({}, events, {
 		width : "50%",
 		height : "100%",
 		left : 0,
@@ -87,38 +69,39 @@ App.router.define('pages/UI-Elements/repeatbox/events', function(page, pageName)
 		showScrollbar : true,
 		enablePullDownToRefresh: true,
 		enablePullUpToRefresh: true,
-		onHide: function(e){ logNewEvent('onHide'); },
-		onLongTouch: function(e){ logNewEvent('onLongTouch'); },
-		onPullDown: function(e){ logNewEvent('onPullDown'); },
-		onPullUp: function(e){ logNewEvent('onPullUp'); },
-		onRowDeleted: function(e){ logNewEvent('onRowDeleted'); },
-		onRowDeleting: function(e){ logNewEvent('onRowDeleting'); },
 		//onScroll: function(e){ logNewEvent('onScroll'); },
-		onSelectedItem: function(e){ logNewEvent('onSelectedItem'); },
-		onSelectionChanged: function(e){ logNewEvent('onSelectionChanged'); },
-		onShow: function(e){ logNewEvent('onShow'); },
-		onSwipe: function(e){ logNewEvent('onSwipe'); },
-		onTouch: function(e){ logNewEvent('onTouch'); },
-		onTouchEnded: function(e){ logNewEvent('onTouchEnded'); },
 		onRowRender: function(e){
 			var label = this.controls[0];
 			label.text = e.rowData.lang;	
 			label.fillColor = 'red';
 			label.fontColor = 'white';
 		}
-	});
+	}));
 
 	rBox.itemTemplate.height = "10%";
 	rBox.itemTemplate.fillColor = "red";
 	rBox.itemTemplate.add(label_for_repeatbox);
 
 	var label_for_events = create_label_for_events();
-  var btn_clear = create_txt_btn_clear(label_for_events);
-  var btn_toggle_hide = create_txt_btn_toggle_hide(rBox);
   
-  _.each([label_for_events, btn_clear, btn_toggle_hide, rBox], function(item){ page.add(item); });
+  _.each([label_for_events, rBox], function(item){ page.add(item); });
 	
 	page.onShow = function(){
-		App.defaults.header(page, pageName);
+		var clear_btn = {
+			title: 'Clear',
+      onSelected: function(e){
+        label_for_events.text = '';
+      }
+		};
+		var hide_btn = {
+			title: 'Hide',
+      onSelected: function(e){
+        var visible = rBox.visible;
+        var txt = (visible) ? 'Show' : 'Hide';
+        rBox.visible = !visible;
+        this.text = txt;
+      }
+		};
+		App.defaults.header(page, pageName, [clear_btn, hide_btn]);
 	};
 });

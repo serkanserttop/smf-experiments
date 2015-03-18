@@ -3,5 +3,5 @@ App.router.define('pages/UI-Elements/hello-world/index', function(page, pageName
 		['Label', navgen(pages_url + 'label')],
 		['Text Button', navgen(pages_url + 'textbutton')]
 	];
-	App.helpers.createPageLinksWithDefine(page, pageName, links);
+	App.helpers.createLinks(page, pageName, links);
 });
